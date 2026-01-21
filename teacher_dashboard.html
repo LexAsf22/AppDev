@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teacher Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1>LabClass - Teacher</h1>
+    <div class="user-info">Teacher: Dr. Johnson</div>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" onclick="showSection('approveBookings')">Approve Lab Bookings</a>
+        <a href="#" onclick="showSection('reportIssues')">Report Classroom Issues</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+    <div class="main">
+        <div id="dashboard" class="card">
+            <h3>Welcome!</h3>
+            <p>Select an option from the sidebar to manage lab approvals or report issues.</p>
+        </div>
+
+        <!-- Approve Bookings -->
+        <div id="approveBookings" class="card" style="display:none;">
+            <h3>Pending Lab Bookings</h3>
+            <ul id="pendingBookings">
+                <li>Jane Doe - Chemistry Lab - 8:00-10:00 
+                    <button onclick="approveBooking(this)">Approve</button>
+                    <button onclick="rejectBooking(this)">Reject</button>
+                </li>
+                <li>John Smith - Computer Lab - 10:00-12:00
+                    <button onclick="approveBooking(this)">Approve</button>
+                    <button onclick="rejectBooking(this)">Reject</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Report Classroom Issues -->
+        <div id="reportIssues" class="card" style="display:none;">
+            <h3>Report Classroom Issue</h3>
+            <label>Room</label>
+            <input type="text" id="room" placeholder="Enter room number">
+
+            <label>Issue</label>
+            <textarea id="issue" placeholder="Describe the problem"></textarea>
+
+            <button onclick="submitIssue()">Submit</button>
+            <p id="issueMessage" style="color:green; margin-top:10px;"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+function showSection(sectionId) {
+    const sections = ['dashboard','approveBookings','reportIssues'];
+    sections.forEach(id => document.getElementById(id).style.display = (id === sectionId ? 'block':'none'));
+}
+
+// Approve/Reject Booking simulation
+function approveBooking(btn) {
+    btn.parentElement.style.textDecoration = 'line-through';
+    btn.parentElement.style.color = 'green';
+}
+
+function rejectBooking(btn) {
+    btn.parentElement.style.textDecoration = 'line-through';
+    btn.parentElement.style.color = 'red';
+}
+
+// Submit Classroom Issue
+function submitIssue() {
+    const room = document.getElementById('room').value;
+    const issue = document.getElementById('issue').value;
+    if(room && issue){
+        document.getElementById('issueMessage').textContent = `Issue in ${room} submitted successfully!`;
+        document.getElementById('room').value = '';
+        document.getElementById('issue').value = '';
+    } else {
+        document.getElementById('issueMessage').textContent = 'Please fill all fields';
+        document.getElementById('issueMessage').style.color = 'red';
+    }
+}
+</script>
+</body>
+</html>

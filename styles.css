@@ -1,0 +1,130 @@
+/* General reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #f5f6fa;
+}
+
+/* Header */
+header {
+    background-color: #2e8b57;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+header .user-info {
+    font-size: 16px;
+}
+
+/* Container */
+.container {
+    display: flex;
+    min-height: 80vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #1e5b3a;
+    padding: 20px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #246b45;
+}
+
+/* Main content */
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+/* Cards */
+.card {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #2e8b57;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Buttons */
+button {
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #246b45;
+}
+
+/* Forms */
+input[type="text"], input[type="password"], select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+form label {
+    font-weight: 600;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    .sidebar a {
+        flex: 1;
+        text-align: center;
+        margin: 0 5px;
+    }
+}

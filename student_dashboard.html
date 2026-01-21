@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<style>
+    /* Calendar table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #2e8b57;
+        color: white;
+    }
+
+    td.booked {
+        background-color: #f28b82; /* red for booked */
+        color: white;
+    }
+
+    td.available {
+        background-color: #a5d6a7; /* green for available */
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    td.available:hover {
+        background-color: #81c784;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>LabClass - Student</h1>
+    <div class="user-info">Student: Jane Doe</div>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" onclick="showSection('bookingForm')">Lab Booking</a>
+        <a href="#" onclick="showSection('bookingStatus')">Booking Status</a>
+        <a href="#" onclick="showSection('availableLabs')">Available Labs</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+    <div class="main">
+        <div id="dashboard" class="card">
+            <h3>Welcome!</h3>
+            <p>Select an option from the sidebar to manage lab bookings.</p>
+        </div>
+
+        <div id="bookingForm" class="card" style="display:none;">
+            <h3>Lab Booking Form</h3>
+            <label for="labSelect">Select Lab</label>
+            <select id="labSelect">
+                <option value="Chemistry Lab">Chemistry Lab</option>
+                <option value="Computer Lab">Computer Lab</option>
+                <option value="Physics Lab">Physics Lab</option>
+            </select>
+
+            <label for="timeSlot">Select Time Slot</label>
+            <select id="timeSlot">
+                <option value="8:00-10:00">8:00 - 10:00</option>
+                <option value="10:00-12:00">10:00 - 12:00</option>
+                <option value="1:00-3:00">1:00 - 3:00</option>
+                <option value="3:00-5:00">3:00 - 5:00</option>
+            </select>
+
+            <button onclick="bookLab()">Submit Booking</button>
+            <p id="bookingMessage" style="color:green; margin-top:10px;"></p>
+        </div>
+
+        <div id="bookingStatus" class="card" style="display:none;">
+            <h3>Your Bookings</h3>
+            <ul id="bookingList"></ul>
+        </div>
+
+        <!-- Available Labs Calendar -->
+        <div id="availableLabs" class="card" style="display:none;">
+            <h3>Available Labs Calendar</h3>
+            <table id="calendarTable">
+                <!-- JS will fill this -->
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+const bookings = []; // array to store bookings
+
+// Lab and time slots
+const labs = ["Chemistry Lab","Computer Lab","Physics Lab"];
+const times = ["8:00-10:00","10:00-12:00","1:00-3:00","3:00-5:00"];
+
+// Show section
+function showSection(sectionId){
+    const sections=['dashboard','bookingForm','bookingStatus','availableLabs'];
+    sections.forEach(id=>document.getElementById(id).style.display=(id===sectionId?'block':'none'));
+    if(sectionId==='bookingStatus') updateBookingList();
+    if(sectionId==='availableLabs') renderCalendar();
+}
+
+// Book lab
+function bookLab(){
+    const lab = document.getElementById('labSelect').value;
+    const time = document.getElementById('timeSlot').value;
+
+    // Check if already booked
+    if(bookings.some(b => b.lab === lab && b.time === time)){
+        document.getElementById('bookingMessage').textContent = `${lab} is already booked for ${time}`;
+        document.getElementById('bookingMessage').style.color = 'red';
+        return;
+    }
+
+    bookings.push({lab,time});
+    document.getElementById('bookingMessage').textContent = `Successfully booked ${lab} for ${time}!`;
+    document.getElementById('bookingMessage').style.color = 'green';
+
+    renderCalendar();
+}
+
+// Update Booking Status
+function updateBookingList(){
+    const ul = document.getElementById('bookingList');
+    ul.innerHTML='';
+    if(bookings.length===0) ul.innerHTML='<li>No bookings yet.</li>';
+    else{
+        bookings.forEach((b,index)=>{
+            const li = document.createElement('li');
+            li.textContent = `${index+1}. ${b.lab} - ${b.time}`;
+            ul.appendChild(li);
+        });
+    }
+}
+
+// Render Calendar
+function renderCalendar(){
+    const table = document.getElementById('calendarTable');
+    table.innerHTML='';
+
+    // Table header
+    const thead = document.createElement('thead');
+    const trHead = document.createElement('tr');
+    trHead.innerHTML='<th>Time</th>'+labs.map(l=>`<th>${l}</th>`).join('');
+    thead.appendChild(trHead);
+    table.appendChild(thead);
+
+    // Table body
+    const tbody = document.createElement('tbody');
+    times.forEach(time=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML=`<td>${time}</td>`;
+        labs.forEach(lab=>{
+            const isBooked = bookings.some(b => b.lab === lab && b.time === time);
+            const td = document.createElement('td');
+            td.textContent = isBooked ? 'Booked' : 'Available';
+            td.className = isBooked ? 'booked' : 'available';
+            // Click to book directly from calendar
+            if(!isBooked){
+                td.onclick = ()=>{
+                    document.getElementById('labSelect').value = lab;
+                    document.getElementById('timeSlot').value = time;
+                    bookLab();
+                };
+            }
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+}
+
+</script>
+</body>
+</html>

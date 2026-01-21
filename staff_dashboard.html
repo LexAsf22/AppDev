@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Staff Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1>LabClass - Staff</h1>
+    <div class="user-info">Staff: Ms. Mendoza</div>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" onclick="showSection('manageInventory')">Manage Inventory</a>
+        <a href="#" onclick="showSection('approveBookings')">Approve Lab Bookings</a>
+        <a href="#" onclick="showSection('maintenanceTracking')">Maintenance Tracking</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+    <div class="main">
+        <div id="dashboard" class="card">
+            <h3>Welcome!</h3>
+            <p>Select an option from the sidebar to manage labs and classrooms.</p>
+        </div>
+
+        <div id="manageInventory" class="card" style="display:none;">
+            <h3>Lab Inventory</h3>
+            <label>Resource Name</label>
+            <input type="text" id="resourceName" placeholder="Enter resource name">
+
+            <label>Quantity</label>
+            <input type="text" id="resourceQty" placeholder="Enter quantity">
+
+            <button onclick="addResource()">Add Resource</button>
+            <ul id="inventoryList" style="margin-top:10px;"></ul>
+        </div>
+
+        <div id="approveBookings" class="card" style="display:none;">
+            <h3>Pending Bookings</h3>
+            <ul>
+                <li>Chemistry Lab - 8:00-10:00
+                    <button onclick="alert('Booking Approved')">Approve</button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="maintenanceTracking" class="card" style="display:none;">
+            <h3>Maintenance Issues</h3>
+            <ul>
+                <li>Room 101 - Broken projector <button onclick="alert('Marked as Done')">Mark Done</button></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+function showSection(sectionId){
+    const sections=['dashboard','manageInventory','approveBookings','maintenanceTracking'];
+    sections.forEach(id=>document.getElementById(id).style.display=(id===sectionId?'block':'none'));
+}
+
+// Inventory management
+const inventory = [];
+function addResource(){
+    const name=document.getElementById('resourceName').value;
+    const qty=document.getElementById('resourceQty').value;
+    if(name && qty){
+        inventory.push({name,qty});
+        const ul=document.getElementById('inventoryList');
+        const li=document.createElement('li');
+        li.textContent=`${name} - ${qty}`;
+        ul.appendChild(li);
+        document.getElementById('resourceName').value='';
+        document.getElementById('resourceQty').value='';
+    } else alert('Fill all fields');
+}
+</script>
+</body>
+</html>

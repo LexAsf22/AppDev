@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1>LabClass - Admin</h1>
+    <div class="user-info">Admin: Mr. Reyes</div>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" onclick="showSection('userManagement')">User Management</a>
+        <a href="#" onclick="showSection('resourceManagement')">Resource Management</a>
+        <a href="#" onclick="showSection('reports')">Reports</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+    <div class="main">
+        <div id="dashboard" class="card">
+            <h3>Welcome!</h3>
+            <p>Select an option to manage users, resources, and reports.</p>
+        </div>
+
+        <!-- User Management -->
+        <div id="userManagement" class="card" style="display:none;">
+            <h3>Add New User</h3>
+            <label>Username</label>
+            <input type="text" id="newUser" placeholder="Enter name">
+
+            <label>Role</label>
+            <select id="newRole">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="staff">Staff</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <button onclick="addUser()">Add User</button>
+            <ul id="userList" style="margin-top:10px;"></ul>
+        </div>
+
+        <!-- Resource Management -->
+        <div id="resourceManagement" class="card" style="display:none;">
+            <h3>Add Lab/Classroom Resource</h3>
+            <label>Resource Name</label>
+            <input type="text" id="resName" placeholder="Enter resource">
+
+            <label>Quantity</label>
+            <input type="text" id="resQty" placeholder="Enter quantity">
+
+            <button onclick="addRes()">Add Resource</button>
+            <ul id="resList" style="margin-top:10px;"></ul>
+        </div>
+
+        <!-- Reports -->
+        <div id="reports" class="card" style="display:none;">
+            <h3>Reports</h3>
+            <ul>
+                <li>Lab Bookings: 10</li>
+                <li>Pending Classroom Issues: 3</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+function showSection(sectionId){
+    const sections=['dashboard','userManagement','resourceManagement','reports'];
+    sections.forEach(id=>document.getElementById(id).style.display=(id===sectionId?'block':'none'));
+}
+
+// User Management
+const users=[];
+function addUser(){
+    const name=document.getElementById('newUser').value;
+    const role=document.getElementById('newRole').value;
+    if(name){
+        users.push({name,role});
+        const ul=document.getElementById('userList');
+        const li=document.createElement('li');
+        li.textContent=`${name} - ${role}`;
+        ul.appendChild(li);
+        document.getElementById('newUser').value='';
+    } else alert('Enter username');
+}
+
+// Resource Management
+const resources=[];
+function addRes(){
+    const name=document.getElementById('resName').value;
+    const qty=document.getElementById('resQty').value;
+    if(name && qty){
+        resources.push({name,qty});
+        const ul=document.getElementById('resList');
+        const li=document.createElement('li');
+        li.textContent=`${name} - ${qty}`;
+        ul.appendChild(li);
+        document.getElementById('resName').value='';
+        document.getElementById('resQty').value='';
+    } else alert('Fill all fields');
+}
+</script>
+</body>
+</html>
