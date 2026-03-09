@@ -848,7 +848,7 @@ export default function Chat() {
   /* ── CONNECT ── */
   const connect = () => {
     const client = new Client({
-      webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
+      webSocketFactory: () => new SockJS("http://192.168.1.7:8080/ws"),
       reconnectDelay: 5000,
       onConnect: () => {
         client.subscribe("/topic/channel1", res => {
@@ -887,7 +887,7 @@ export default function Chat() {
     try {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await fetch("http://localhost:8080/upload", { method:"POST", body:fd });
+      const res = await fetch("http://192.168.1.7:8080/upload", { method:"POST", body:fd });
       if (!res.ok) throw new Error("HTTP " + res.status);
       const fileUrl = await res.text();
       stompClient.current.publish({
