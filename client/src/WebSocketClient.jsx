@@ -327,6 +327,7 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
   const pcRef       = useRef(null);
   const localStream = useRef(null);
   const signalSub   = useRef(null);
+  const endTimeout  = useRef(null);
 
   const [muted,  setMuted]  = useState(false);
   const [camOff, setCamOff] = useState(false);
@@ -337,26 +338,56 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
 
   useEffect(() => {
     let pc;
+    let callStarted = false;
+    let endListenReady = false;
+    let pendingCandidates = [];
+    let remoteDescSet = false;
+
     const init = async () => {
       try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          setStatus("Camera/mic unavailable — use HTTPS or localhost");
+          return;
+        }
+
         const stream = await navigator.mediaDevices.getUserMedia(
-          mode === "video" ? { audio:true, video:{ width:1280, height:720 } } : { audio:true, video:false }
+          mode === "video"
+            ? { audio: true, video: { width: 1280, height: 720, facingMode: "user" } }
+            : { audio: true, video: false }
         );
         localStream.current = stream;
-        if (localRef.current) localRef.current.srcObject = stream;
+
+        if (mode === "video" && localRef.current) {
+          localRef.current.srcObject = stream;
+        }
 
         pc = new RTCPeerConnection({
-          iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]
+          iceServers: [
+            { urls: "stun:stun.l.google.com:19302" },
+            { urls: "stun:stun1.l.google.com:19302" },
+          ],
+          iceTransportPolicy: "all",
+          iceCandidatePoolSize: 10,
         });
         pcRef.current = pc;
-        stream.getTracks().forEach(t => pc.addTrack(t, stream));
+
+        stream.getTracks().forEach(t => {
+          console.log("Adding track:", t.kind);
+          pc.addTrack(t, stream);
+        });
 
         pc.ontrack = e => {
-          if (remoteRef.current) remoteRef.current.srcObject = e.streams[0];
+          console.log("Got remote track:", e.track.kind);
+          if (remoteRef.current && e.streams[0]) {
+            remoteRef.current.srcObject = e.streams[0];
+            remoteRef.current.play().catch(() => {});
+          }
           setStatus("Connected");
+          callStarted = true;
           clearInterval(durTimer.current);
-          durTimer.current = setInterval(() => setSecs(s => s+1), 1000);
+          durTimer.current = setInterval(() => setSecs(s => s + 1), 1000);
         };
+
         pc.onicecandidate = e => {
           if (e.candidate && stompClient?.current?.connected) {
             stompClient.current.publish({
@@ -365,19 +396,72 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
             });
           }
         };
+
         pc.oniceconnectionstatechange = () => {
-          if (["disconnected","failed","closed"].includes(pc.iceConnectionState)) {
-            setStatus("Call ended"); clearInterval(durTimer.current);
+          console.log("ICE state:", pc.iceConnectionState);
+
+          if (pc.iceConnectionState === "disconnected") {
+            setStatus("Reconnecting…");
+            // Try ICE restart
+            if (isCaller && pcRef.current) {
+              pcRef.current.restartIce();
+            }
+            endTimeout.current = setTimeout(() => {
+              if (pcRef.current &&
+                ["disconnected", "failed"].includes(pcRef.current.iceConnectionState)) {
+                setStatus("Call ended");
+                clearInterval(durTimer.current);
+              }
+            }, 8000);
+
+          } else if (["failed", "closed"].includes(pc.iceConnectionState)) {
+            clearTimeout(endTimeout.current);
+            setStatus("Call ended");
+            clearInterval(durTimer.current);
+
+          } else if (["connected", "completed"].includes(pc.iceConnectionState)) {
+            clearTimeout(endTimeout.current);
+            if (callStarted) setStatus("Connected");
           }
         };
 
+        pc.onconnectionstatechange = () => {
+          console.log("Connection state:", pc.connectionState);
+        };
+
+        const setRemoteAndFlush = async (sdp) => {
+          await pc.setRemoteDescription(new RTCSessionDescription(sdp));
+          remoteDescSet = true;
+          console.log("Remote desc set, flushing", pendingCandidates.length, "buffered candidates");
+          for (const c of pendingCandidates) {
+            try { await pc.addIceCandidate(new RTCIceCandidate(c)); } catch (_) {}
+          }
+          pendingCandidates = [];
+        };
+
         if (stompClient?.current?.connected) {
-          // Subscribe FIRST
+
           signalSub.current = stompClient.current.subscribe("/topic/call-signal", async msg => {
             const sig = JSON.parse(msg.body);
             if (sig.sender === myName) return;
-            if (sig.type === "OFFER" && !isCaller) {
-              await pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(sig.payload)));
+
+            if (sig.type === "READY" && isCaller) {
+              try {
+                const offer = await pc.createOffer({
+                  offerToReceiveAudio: true,
+                  offerToReceiveVideo: mode === "video",
+                });
+                await pc.setLocalDescription(offer);
+                stompClient.current.publish({
+                  destination: "/app/call-signal",
+                  body: JSON.stringify({ sender: myName, type: "OFFER", payload: JSON.stringify(offer) }),
+                });
+              } catch (err) {
+                setStatus("Error: " + err.message);
+              }
+
+            } else if (sig.type === "OFFER" && !isCaller) {
+              await setRemoteAndFlush(JSON.parse(sig.payload));
               const answer = await pc.createAnswer();
               await pc.setLocalDescription(answer);
               stompClient.current.publish({
@@ -385,28 +469,39 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
                 body: JSON.stringify({ sender: myName, type: "ANSWER", payload: JSON.stringify(answer) }),
               });
               setStatus("Connected");
+              callStarted = true;
               clearInterval(durTimer.current);
-              durTimer.current = setInterval(() => setSecs(s => s+1), 1000);
+              durTimer.current = setInterval(() => setSecs(s => s + 1), 1000);
+
             } else if (sig.type === "ANSWER" && isCaller) {
               if (pc.signalingState !== "stable") {
-                await pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(sig.payload)));
+                await setRemoteAndFlush(JSON.parse(sig.payload));
               }
+
             } else if (sig.type === "ICE") {
-              try { await pc.addIceCandidate(new RTCIceCandidate(JSON.parse(sig.payload))); } catch(_){}
+              const candidate = JSON.parse(sig.payload);
+              if (remoteDescSet) {
+                try { await pc.addIceCandidate(new RTCIceCandidate(candidate)); } catch (_) {}
+              } else {
+                pendingCandidates.push(candidate);
+              }
+
             } else if (sig.type === "END") {
-              onEnd();
+              if (endListenReady) {
+                onEnd();
+              }
             }
           });
 
-          // THEN send offer (only caller)
-          if (isCaller) {
-            const offer = await pc.createOffer();
-            await pc.setLocalDescription(offer);
+          setTimeout(() => { endListenReady = true; }, 1500);
+
+          if (!isCaller) {
             stompClient.current.publish({
               destination: "/app/call-signal",
-              body: JSON.stringify({ sender: myName, type: "OFFER", payload: JSON.stringify(offer) }),
+              body: JSON.stringify({ sender: myName, type: "READY", payload: "" }),
             });
           }
+
         } else {
           setStatus("Not connected to server");
         }
@@ -414,13 +509,16 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
         setStatus(err.name === "NotAllowedError" ? "Permission denied" : "Error: " + err.message);
       }
     };
+
     init();
+
     return () => {
       clearInterval(durTimer.current);
+      clearTimeout(endTimeout.current);
       localStream.current?.getTracks().forEach(t => t.stop());
       pcRef.current?.close();
       signalSub.current?.unsubscribe();
-      if (stompClient?.current?.connected) {
+      if (callStarted && stompClient?.current?.connected) {
         stompClient.current.publish({
           destination: "/app/call-signal",
           body: JSON.stringify({ sender: myName, type: "END", payload: "" }),
@@ -429,85 +527,122 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
     };
   }, []); // eslint-disable-line
 
-  const toggleMute = () => { localStream.current?.getAudioTracks().forEach(t => { t.enabled = !t.enabled; }); setMuted(m => !m); };
-  const toggleCam  = () => { localStream.current?.getVideoTracks().forEach(t => { t.enabled = !t.enabled; }); setCamOff(c => !c); };
+  const toggleMute = () => {
+    const nowMuted = !muted;
+    localStream.current?.getAudioTracks().forEach(t => {
+      t.enabled = !nowMuted;
+    });
+    pcRef.current?.getSenders().forEach(sender => {
+      if (sender.track?.kind === "audio") {
+        sender.track.enabled = !nowMuted;
+      }
+    });
+    setMuted(nowMuted);
+  };
 
-  const iconColor  = dark => dark ? "#fff" : "#1a0533";
-  const callBtnSt  = (bg, size = 52) => ({
-    width:size, height:size, borderRadius:"50%", border:"none",
-    background:bg, cursor:"pointer",
-    display:"flex", alignItems:"center", justifyContent:"center",
-    boxShadow:"0 4px 20px rgba(0,0,0,0.4)",
-    transition:"transform 0.12s, opacity 0.12s",
+  const toggleCam = () => {
+    const nowOff = !camOff;
+    localStream.current?.getVideoTracks().forEach(t => {
+      t.enabled = !nowOff;
+    });
+    pcRef.current?.getSenders().forEach(sender => {
+      if (sender.track?.kind === "video") {
+        sender.track.enabled = !nowOff;
+      }
+    });
+    setCamOff(nowOff);
+  };
+
+  const callBtnSt = (bg, size = 52) => ({
+    width: size, height: size, borderRadius: "50%", border: "none",
+    background: bg, cursor: "pointer",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+    transition: "transform 0.12s, opacity 0.12s",
   });
 
   return (
     <div style={{
-      position:"fixed", inset:0, zIndex:100,
-      fontFamily:"'Plus Jakarta Sans',sans-serif",
+      position: "fixed", inset: 0, zIndex: 100,
+      fontFamily: "'Plus Jakarta Sans',sans-serif",
       background: mode === "video" ? "#000" : "linear-gradient(135deg,#160330 0%,#0a1535 100%)",
-      display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
     }}>
       <style>{`@keyframes callPulse{0%,100%{box-shadow:0 0 0 0 rgba(196,109,255,0.5)}70%{box-shadow:0 0 0 20px rgba(196,109,255,0)}}`}</style>
-      {mode === "video" && <video ref={remoteRef} autoPlay playsInline style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover"}}/>}
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 40%,transparent 55%,rgba(0,0,0,0.65) 100%)",pointerEvents:"none"}}/>
+
+      {/* Remote video — full screen */}
       {mode === "video" && (
-        <video ref={localRef} autoPlay muted playsInline style={{
-          position:"absolute",bottom:90,right:20,width:160,height:110,
-          borderRadius:12,objectFit:"cover",zIndex:2,background:"#111",
-          border:"2px solid rgba(255,255,255,0.25)",boxShadow:"0 8px 28px rgba(0,0,0,0.5)",
-        }}/>
+        <video ref={remoteRef} autoPlay playsInline
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+        />
       )}
-      <div style={{position:"relative",zIndex:3,textAlign:"center",color:"#fff",marginBottom:44}}>
+
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 40%,transparent 55%,rgba(0,0,0,0.65) 100%)", pointerEvents: "none" }} />
+
+      {/* Local video — picture in picture */}
+      {mode === "video" && (
+        <video ref={localRef} autoPlay muted playsInline
+          style={{
+            position: "absolute", bottom: 90, right: 20, width: 160, height: 110,
+            borderRadius: 12, objectFit: "cover", zIndex: 2, background: "#111",
+            border: "2px solid rgba(255,255,255,0.25)", boxShadow: "0 8px 28px rgba(0,0,0,0.5)",
+          }}
+        />
+      )}
+
+      <div style={{ position: "relative", zIndex: 3, textAlign: "center", color: "#fff", marginBottom: 44 }}>
         {mode !== "video" && (
           <div style={{
-            width:92,height:92,borderRadius:"50%",margin:"0 auto 20px",
-            background:"linear-gradient(135deg,#c46dff,#7b8cff)",
-            display:"flex",alignItems:"center",justifyContent:"center",
-            fontSize:36,fontWeight:700,animation:"callPulse 1.8s infinite",
+            width: 92, height: 92, borderRadius: "50%", margin: "0 auto 20px",
+            background: "linear-gradient(135deg,#c46dff,#7b8cff)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 36, fontWeight: 700, animation: "callPulse 1.8s infinite",
           }}>C</div>
         )}
-        <div style={{fontSize:22,fontWeight:700}}>Channel 1</div>
-        <div style={{fontSize:13,color:"rgba(255,255,255,0.55)",marginTop:6}}>
+        <div style={{ fontSize: 22, fontWeight: 700 }}>Channel 1</div>
+        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginTop: 6 }}>
           {status === "Connected" ? fmt(secs) : status}
         </div>
       </div>
-      <div style={{position:"relative",zIndex:3,display:"flex",gap:22,alignItems:"center"}}>
-        <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+
+      <div style={{ position: "relative", zIndex: 3, display: "flex", gap: 22, alignItems: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
           <button style={callBtnSt(muted ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.18)")}
             onClick={toggleMute}
-            onMouseEnter={e=>e.currentTarget.style.opacity="0.8"}
-            onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
-            {muted ? <IcoMicOff color="#1a0533"/> : <IcoMic color="#fff"/>}
+            onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            {muted ? <IcoMicOff color="#1a0533" /> : <IcoMic color="#fff" />}
           </button>
-          <span style={{fontSize:11,color:"rgba(255,255,255,0.55)"}}>{muted?"Unmute":"Mute"}</span>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{muted ? "Unmute" : "Mute"}</span>
         </div>
-        <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
           <button style={callBtnSt("#ef4444", 64)} onClick={onEnd}
-            onMouseEnter={e=>e.currentTarget.style.opacity="0.8"}
-            onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
-            <IcoPhoneOff color="#fff"/>
+            onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            <IcoPhoneOff color="#fff" />
           </button>
-          <span style={{fontSize:11,color:"rgba(255,255,255,0.55)"}}>End</span>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>End</span>
         </div>
+
         {mode === "video" ? (
-          <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <button style={callBtnSt(camOff ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.18)")}
               onClick={toggleCam}
-              onMouseEnter={e=>e.currentTarget.style.opacity="0.8"}
-              onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
-              {camOff ? <IcoVideo color="#1a0533"/> : <IcoVideoOff color="#fff"/>}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+              {camOff ? <IcoVideo color="#1a0533" /> : <IcoVideoOff color="#fff" />}
             </button>
-            <span style={{fontSize:11,color:"rgba(255,255,255,0.55)"}}>{camOff?"Cam on":"Cam off"}</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{camOff ? "Cam on" : "Cam off"}</span>
           </div>
         ) : (
-          <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <button style={callBtnSt("rgba(255,255,255,0.18)")}
-              onMouseEnter={e=>e.currentTarget.style.opacity="0.8"}
-              onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
-              <IcoInfo color="#fff"/>
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+              <IcoInfo color="#fff" />
             </button>
-            <span style={{fontSize:11,color:"rgba(255,255,255,0.55)"}}>Speaker</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>Speaker</span>
           </div>
         )}
       </div>
@@ -846,9 +981,9 @@ export default function Chat() {
   useEffect(() => { messagesEnd.current?.scrollIntoView({ behavior:"smooth" }); }, [messages]);
 
   /* ── CONNECT ── */
-  const connect = () => {
+const connect = () => {
   const client = new Client({
-    webSocketFactory: () => new SockJS("http://192.168.195.90:8080/ws"), // backend IP
+    webSocketFactory: () => new SockJS("http://192.168.100.127:8080/ws"),
     reconnectDelay: 5000,
     onConnect: () => {
       client.subscribe("/topic/channel1", (res) => {
@@ -868,13 +1003,13 @@ export default function Chat() {
   stompClient.current = client;
 };
 
-  const joinChat = () => { if (!name.trim()) return; connect(); setJoined(true); };
+const joinChat = () => { if (!name.trim()) return; connect(); setJoined(true); };
 
-  /* ── SEND TEXT ── */
-  const sendMessage = () => {
+/* ── SEND TEXT ── */
+const sendMessage = () => {
   if (stompClient.current?.connected && message.trim()) {
     stompClient.current.publish({
-      destination: "/app/channel1", // must match backend mapping
+      destination: "/app/send",
       body: JSON.stringify({
         sender: nameRef.current,
         content: message.trim(),
@@ -884,43 +1019,47 @@ export default function Chat() {
   }
 };
 
-  /* ── UPLOAD ── */
-  const uploadFile = async (file, type) => {
-    try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("http://192.168.195.90:8080/upload", {
+/* ── UPLOAD ── */
+const BASE_URL = "http://192.168.100.127:8080";
+
+const uploadFile = async (file, type) => {
+  try {
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch(`${BASE_URL}/upload`, {
       method: "POST",
-      body: fd
+      body: fd,
     });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const fileUrl = await res.text();
-      stompClient.current.publish({
-        destination: "/app/send",
-        body: JSON.stringify({ sender: name, content: file.name || "", type, fileUrl }),
-      });
-    } catch (err) {
-      alert("Upload failed — is the server running?\n" + err.message);
-    }
-  };
+    if (!res.ok) throw new Error("HTTP " + res.status);
 
-  const handleImageChange = e => { const f = e.target.files[0]; if (f) uploadFile(f,"IMAGE"); e.target.value = ""; };
-  const handleFileChange  = e => { const f = e.target.files[0]; if (f) uploadFile(f,"FILE");  e.target.value = ""; };
+    const rawUrl = await res.text();
 
-  /* ── VOICE RECORDING ── */
+    // Ensure we always store a full absolute URL
+    const fileUrl = rawUrl.startsWith("http")
+      ? rawUrl
+      : `${BASE_URL}${rawUrl.startsWith("/") ? "" : "/"}${rawUrl}`;
 
+    stompClient.current.publish({
+      destination: "/app/send",
+      body: JSON.stringify({ sender: name, content: file.name || "", type, fileUrl }),
+    });
+  } catch (err) {
+    alert("Upload failed — is the server running?\n" + err.message);
+  }
+};
+
+const handleImageChange = e => { const f = e.target.files[0]; if (f) uploadFile(f, "IMAGE"); e.target.value = ""; };
+const handleFileChange  = e => { const f = e.target.files[0]; if (f) uploadFile(f, "FILE");  e.target.value = ""; };
+
+/* ── VOICE RECORDING ── */
 const startRecording = async () => {
-
-  // check browser support
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     alert("Your browser does not support microphone recording.");
     return;
   }
 
   try {
-
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
     const recorder = new MediaRecorder(stream);
     recorderRef.current = recorder;
 
@@ -933,11 +1072,8 @@ const startRecording = async () => {
     };
 
     recorder.onstop = () => {
-
-      // stop microphone tracks
       stream.getTracks().forEach(track => track.stop());
 
-      // stop timer
       if (recordTimer.current) {
         clearInterval(recordTimer.current);
       }
@@ -946,28 +1082,22 @@ const startRecording = async () => {
       setRecordSecs(0);
 
       const blob = new Blob(chunks, { type: "audio/webm" });
-
       if (blob.size > 0) {
         const file = new File([blob], "voice.webm", { type: "audio/webm" });
         uploadFile(file, "AUDIO");
       }
-
     };
 
-    recorder.start();   // start recording
+    recorder.start();
     setRecording(true);
 
     let seconds = 0;
-
     recordTimer.current = setInterval(() => {
       seconds++;
       setRecordSecs(seconds);
-
-      // auto stop after 60 seconds
       if (seconds >= 60 && recorder.state !== "inactive") {
         recorder.stop();
       }
-
     }, 1000);
 
   } catch (error) {
@@ -976,17 +1106,12 @@ const startRecording = async () => {
   }
 };
 
-
 /* ── STOP RECORDING ── */
-
 const stopRecording = () => {
-
   const recorder = recorderRef.current;
-
   if (recorder && recorder.state !== "inactive") {
     recorder.stop();
   }
-
 };
 
   /* ── CALLS ── */
@@ -1021,16 +1146,36 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
 
   /* ── RENDER MESSAGE ── */
   const renderContent = msg => {
-    if (msg.type === "IMAGE") return <img src={msg.fileUrl} alt="img" className="msg-img"/>;
-    if (msg.type === "FILE")  return (
-      <a href={msg.fileUrl} target="_blank" rel="noreferrer" className="msg-file">
+  const resolveUrl = (url) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    if (url.startsWith("/")) return `http://192.168.100.127:8080${url}`;
+    return `http://192.168.100.127:8080/${url}`;
+  };
+
+  if (msg.type === "IMAGE") {
+    return (
+      <img
+        src={resolveUrl(msg.fileUrl)}
+        alt="img"
+        className="msg-img"
+        onError={e => { e.target.style.border="2px solid red"; e.target.alt="Failed: " + resolveUrl(msg.fileUrl); }}
+      />
+    );
+  }
+  if (msg.type === "FILE") {
+    return (
+      <a href={resolveUrl(msg.fileUrl)} target="_blank" rel="noreferrer" className="msg-file">
         <span className="msg-file-ic"><IcoFile color="#fff" size={18}/></span>
         <span>{msg.content || "Download File"}</span>
       </a>
     );
-    if (msg.type === "AUDIO") return <audio controls src={msg.fileUrl} className="msg-audio"/>;
-    return msg.content;
-  };
+  }
+  if (msg.type === "AUDIO") {
+    return <audio controls src={resolveUrl(msg.fileUrl)} className="msg-audio"/>;
+  }
+  return msg.content;
+};
 
   useEffect(() => () => stompClient.current?.deactivate(), []);
 

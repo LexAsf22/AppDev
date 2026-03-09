@@ -1,16 +1,19 @@
 package com.bench.ws.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 @RestController
-@CrossOrigin(origins = "*") // Already fine
+@CrossOrigin(origins = "*")
 public class FileUploadController {
 
     private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/";
@@ -47,8 +50,7 @@ public class FileUploadController {
         File destination = new File(directory, fileName).getAbsoluteFile();
         file.transferTo(destination);
 
-        // Fix: return backend IP instead of localhost for LAN access
-        String fileUrl = "http://192.168.195.90:8080/uploads/" + fileName;
+        String fileUrl = "http://192.168.100.127:8080/uploads/" + fileName;
         return ResponseEntity.ok(fileUrl);
     }
 }
