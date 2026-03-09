@@ -847,47 +847,52 @@ export default function Chat() {
 
   /* ── CONNECT ── */
   const connect = () => {
-    const client = new Client({
-      webSocketFactory: () => new SockJS("http://192.168.1.7:8080/ws"),
-      reconnectDelay: 5000,
-      onConnect: () => {
-        client.subscribe("/topic/channel1", res => {
-          const msg = JSON.parse(res.body);
-          setMessages(prev => [...prev, { ...msg, time: getTime() }]);
-        });
-        client.subscribe("/topic/call-notify", res => {
-          const sig = JSON.parse(res.body);
-          // Show incoming banner to everyone EXCEPT the person who started the call
-          if (sig.type === "RING" && sig.sender !== nameRef.current) {
-            setIncoming({ from: sig.sender, mode: sig.mode });
-          }
-        });
-      },
-      onStompError: f => console.error("STOMP:", f.headers["message"]),
-    });
-    client.activate();
-    stompClient.current = client;
-  };
+  const client = new Client({
+    webSocketFactory: () => new SockJS("http://192.168.195.90:8080/ws"), // backend IP
+    reconnectDelay: 5000,
+    onConnect: () => {
+      client.subscribe("/topic/channel1", (res) => {
+        const msg = JSON.parse(res.body);
+        setMessages(prev => [...prev, { ...msg, time: getTime() }]);
+      });
+      client.subscribe("/topic/call-notify", (res) => {
+        const sig = JSON.parse(res.body);
+        if (sig.type === "RING" && sig.sender !== nameRef.current) {
+          setIncoming({ from: sig.sender, mode: sig.mode });
+        }
+      });
+    },
+    onStompError: (f) => console.error("STOMP:", f.headers["message"]),
+  });
+  client.activate();
+  stompClient.current = client;
+};
 
   const joinChat = () => { if (!name.trim()) return; connect(); setJoined(true); };
 
   /* ── SEND TEXT ── */
   const sendMessage = () => {
-    if (!message.trim() || !stompClient.current?.connected) return;
+  if (stompClient.current?.connected && message.trim()) {
     stompClient.current.publish({
-      destination: "/app/send",
-      body: JSON.stringify({ sender: name, content: message, type: "TEXT", fileUrl: null }),
+      destination: "/app/channel1", // must match backend mapping
+      body: JSON.stringify({
+        sender: nameRef.current,
+        content: message.trim(),
+      }),
     });
     setMessage("");
-    inputRef.current?.focus();
-  };
+  }
+};
 
   /* ── UPLOAD ── */
   const uploadFile = async (file, type) => {
     try {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await fetch("http://192.168.1.7:8080/upload", { method:"POST", body:fd });
+      const res = await fetch("http://192.168.195.90:8080/upload", {
+      method: "POST",
+      body: fd
+    });
       if (!res.ok) throw new Error("HTTP " + res.status);
       const fileUrl = await res.text();
       stompClient.current.publish({
@@ -903,44 +908,108 @@ export default function Chat() {
   const handleFileChange  = e => { const f = e.target.files[0]; if (f) uploadFile(f,"FILE");  e.target.value = ""; };
 
   /* ── VOICE RECORDING ── */
-  const startRecording = async () => {
-    try {
-      const stream   = await navigator.mediaDevices.getUserMedia({ audio:true });
-      const recorder = new MediaRecorder(stream);
-      recorderRef.current = recorder;
-      const chunks = [];
-      recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-      recorder.onstop = () => {
-        stream.getTracks().forEach(t => t.stop());
+
+const startRecording = async () => {
+
+  // check browser support
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert("Your browser does not support microphone recording.");
+    return;
+  }
+
+  try {
+
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    const recorder = new MediaRecorder(stream);
+    recorderRef.current = recorder;
+
+    const chunks = [];
+
+    recorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) {
+        chunks.push(e.data);
+      }
+    };
+
+    recorder.onstop = () => {
+
+      // stop microphone tracks
+      stream.getTracks().forEach(track => track.stop());
+
+      // stop timer
+      if (recordTimer.current) {
         clearInterval(recordTimer.current);
-        setRecording(false); setRecordSecs(0);
-        const blob = new Blob(chunks, { type:"audio/webm" });
-        if (blob.size > 0) uploadFile(new File([blob],"voice.webm",{type:"audio/webm"}), "AUDIO");
-      };
-      recorder.start(100);
-      setRecording(true);
-      let s = 0;
-      recordTimer.current = setInterval(() => { s++; setRecordSecs(s); if (s >= 60) recorder.stop(); }, 1000);
-    } catch {
-      alert("Microphone access denied.");
-    }
-  };
-  const stopRecording = () => recorderRef.current?.stop();
+      }
+
+      setRecording(false);
+      setRecordSecs(0);
+
+      const blob = new Blob(chunks, { type: "audio/webm" });
+
+      if (blob.size > 0) {
+        const file = new File([blob], "voice.webm", { type: "audio/webm" });
+        uploadFile(file, "AUDIO");
+      }
+
+    };
+
+    recorder.start();   // start recording
+    setRecording(true);
+
+    let seconds = 0;
+
+    recordTimer.current = setInterval(() => {
+      seconds++;
+      setRecordSecs(seconds);
+
+      // auto stop after 60 seconds
+      if (seconds >= 60 && recorder.state !== "inactive") {
+        recorder.stop();
+      }
+
+    }, 1000);
+
+  } catch (error) {
+    console.error("Microphone error:", error);
+    alert("Microphone access denied or unavailable.");
+  }
+};
+
+
+/* ── STOP RECORDING ── */
+
+const stopRecording = () => {
+
+  const recorder = recorderRef.current;
+
+  if (recorder && recorder.state !== "inactive") {
+    recorder.stop();
+  }
+
+};
 
   /* ── CALLS ── */
-  const startCall = mode => {
-    if (stompClient.current?.connected) {
-      stompClient.current.publish({
-        destination: "/app/call-notify",
-        body: JSON.stringify({ sender: name, type:"RING", mode }),
-      });
-    }
-    setIsCaller(true);
-    setCallMode(mode);
-  };
-  const acceptCall = () => { const mode = incomingCall?.mode || "voice"; setIncoming(null); setIsCaller(false); setCallMode(mode); };
-  const rejectCall = () => setIncoming(null);
-  const endCall    = () => { setCallMode(null); setIsCaller(false); };
+  const startCall = (mode) => {
+  if (stompClient.current?.connected) {
+    stompClient.current.publish({
+      destination: "/app/call-notify", // server endpoint
+      body: JSON.stringify({ sender: nameRef.current, type: "RING", mode }),
+    });
+  }
+  setIsCaller(true);
+  setCallMode(mode);
+};
+
+const acceptCall = () => {
+  const mode = incomingCall?.mode || "voice";
+  setIncoming(null);
+  setIsCaller(false);
+  setCallMode(mode);
+};
+
+const rejectCall = () => setIncoming(null);
+const endCall = () => { setCallMode(null); setIsCaller(false); };
 
   /* ── INPUT HELPERS ── */
   const handleKeyDown = e => { if (e.key==="Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } };

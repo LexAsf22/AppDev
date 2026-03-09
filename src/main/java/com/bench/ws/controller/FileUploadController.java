@@ -10,12 +10,11 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") // Already fine
 public class FileUploadController {
 
     private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/";
 
-    // Allowed MIME types — reject everything else
     private static final Set<String> ALLOWED_TYPES = Set.of(
         "image/jpeg", "image/png", "image/gif", "image/webp",
         "audio/webm", "audio/ogg", "audio/mpeg",
@@ -29,39 +28,27 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        if (file.isEmpty()) return ResponseEntity.badRequest().body("File is empty");
 
-        // 1. Reject empty uploads
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("File is empty");
-        }
-
-        // 2. Validate MIME type
         String contentType = file.getContentType();
         if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
             return ResponseEntity.badRequest().body("File type not allowed: " + contentType);
         }
 
-        // 3. Sanitize original filename — getOriginalFilename() can be null
         String originalName = file.getOriginalFilename();
         String safeName = (originalName != null ? originalName : "file")
-                .replaceAll("[^a-zA-Z0-9._-]", "_"); // strip anything unsafe
+                .replaceAll("[^a-zA-Z0-9._-]", "_");
 
-        // 4. Build a unique filename
         String fileName = UUID.randomUUID() + "_" + safeName;
 
-        // 5. Create uploads directory if it doesn't exist
         File directory = new File(UPLOAD_DIR);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
+        if (!directory.exists()) directory.mkdirs();
 
-        // 6. transferTo() requires an absolute path — without getAbsoluteFile()
-        //    it resolves relative to the JVM working directory and can silently fail
-        File destination = new File(UPLOAD_DIR + fileName).getAbsoluteFile();
+        File destination = new File(directory, fileName).getAbsoluteFile();
         file.transferTo(destination);
 
-        // 7. Return the public URL the frontend can use directly
-        String fileUrl = "http://localhost:8080/uploads/" + fileName;
+        // Fix: return backend IP instead of localhost for LAN access
+        String fileUrl = "http://192.168.195.90:8080/uploads/" + fileName;
         return ResponseEntity.ok(fileUrl);
     }
 }
