@@ -2,10 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
-/* ─────────────────────────────────────────────────────────
-   ICONS — inline style objects only (no SVG attributes)
-   This guarantees rendering in ALL React/bundler setups.
-───────────────────────────────────────────────────────── */
 const svgBase = (size) => ({
   display: "block",
   width: size,
@@ -164,7 +160,7 @@ function IcoSun({ size = 16, color = "#d97706" }) {
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
       <circle cx="12" cy="12" r="5" style={{ stroke: color, strokeWidth: 2, fill: "none" }} />
-      {[0,45,90,135,180,225,270,315].map((deg, i) => {
+      {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
         const r = Math.PI * deg / 180;
         return (
           <line key={i}
@@ -204,11 +200,11 @@ function IcoFile({ size = 18, color = "#fff" }) {
 ───────────────────────────────────────────────────────── */
 function BackgroundCanvas({ dark }) {
   const canvasRef = useRef(null);
-  const animRef   = useRef(null);
+  const animRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx    = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
     let W, H;
     const resize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
     resize();
@@ -221,99 +217,99 @@ function BackgroundCanvas({ dark }) {
       tw: Math.random() * 0.025 + 0.004, twOff: Math.random() * Math.PI * 2,
     }));
     const NEBULAS = [
-      {cx:0.15,cy:0.25,rx:0.30,ry:0.22,h:260,s:80},
-      {cx:0.75,cy:0.60,rx:0.32,ry:0.26,h:200,s:70},
-      {cx:0.50,cy:0.55,rx:0.38,ry:0.22,h:300,s:60},
-      {cx:0.88,cy:0.18,rx:0.22,ry:0.18,h:240,s:75},
+      { cx: 0.15, cy: 0.25, rx: 0.30, ry: 0.22, h: 260, s: 80 },
+      { cx: 0.75, cy: 0.60, rx: 0.32, ry: 0.26, h: 200, s: 70 },
+      { cx: 0.50, cy: 0.55, rx: 0.38, ry: 0.22, h: 300, s: 60 },
+      { cx: 0.88, cy: 0.18, rx: 0.22, ry: 0.18, h: 240, s: 75 },
     ];
     const shoots = [];
     const shootInt = setInterval(() => shoots.push({
-      x:Math.random()*W, y:Math.random()*H*0.45,
-      len:Math.random()*140+60, spd:Math.random()*9+6,
-      angle:Math.PI/5+(Math.random()-0.5)*0.3,
-      life:1, decay:Math.random()*0.016+0.010,
+      x: Math.random() * W, y: Math.random() * H * 0.45,
+      len: Math.random() * 140 + 60, spd: Math.random() * 9 + 6,
+      angle: Math.PI / 5 + (Math.random() - 0.5) * 0.3,
+      life: 1, decay: Math.random() * 0.016 + 0.010,
     }), 2600);
 
     const clouds = Array.from({ length: 7 }, () => ({
-      x: Math.random(), y: 0.05+Math.random()*0.45,
-      w: 0.12+Math.random()*0.18, h: 0.04+Math.random()*0.06,
-      spd: 0.00004+Math.random()*0.00005, op: 0.55+Math.random()*0.35,
-      puffs: Array.from({length:5+Math.floor(Math.random()*4)}, ()=>({
-        ox:(Math.random()-0.4)*0.9, oy:(Math.random()-0.5)*0.5, rs:0.4+Math.random()*0.7,
+      x: Math.random(), y: 0.05 + Math.random() * 0.45,
+      w: 0.12 + Math.random() * 0.18, h: 0.04 + Math.random() * 0.06,
+      spd: 0.00004 + Math.random() * 0.00005, op: 0.55 + Math.random() * 0.35,
+      puffs: Array.from({ length: 5 + Math.floor(Math.random() * 4) }, () => ({
+        ox: (Math.random() - 0.4) * 0.9, oy: (Math.random() - 0.5) * 0.5, rs: 0.4 + Math.random() * 0.7,
       })),
     }));
 
     const draw = () => {
       t += 0.010;
       if (dark) {
-        ctx.fillStyle = "#03030a"; ctx.fillRect(0,0,W,H);
-        NEBULAS.forEach((n,i) => {
-          const drift = Math.sin(t*0.15+i*1.4)*0.022;
-          const cx=(n.cx+drift)*W, cy=n.cy*H, rx=n.rx*W, ry=n.ry*H;
-          const g=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(rx,ry));
-          g.addColorStop(0,`hsla(${n.h},${n.s}%,58%,0.14)`);
-          g.addColorStop(0.5,`hsla(${n.h+20},${n.s-10}%,48%,0.06)`);
-          g.addColorStop(1,`hsla(${n.h},${n.s}%,38%,0)`);
-          ctx.save(); ctx.scale(1,ry/rx);
-          ctx.beginPath(); ctx.arc(cx,cy*(rx/ry),rx,0,Math.PI*2);
-          ctx.fillStyle=g; ctx.fill(); ctx.restore();
+        ctx.fillStyle = "#03030a"; ctx.fillRect(0, 0, W, H);
+        NEBULAS.forEach((n, i) => {
+          const drift = Math.sin(t * 0.15 + i * 1.4) * 0.022;
+          const cx = (n.cx + drift) * W, cy = n.cy * H, rx = n.rx * W, ry = n.ry * H;
+          const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+          g.addColorStop(0, `hsla(${n.h},${n.s}%,58%,0.14)`);
+          g.addColorStop(0.5, `hsla(${n.h + 20},${n.s - 10}%,48%,0.06)`);
+          g.addColorStop(1, `hsla(${n.h},${n.s}%,38%,0)`);
+          ctx.save(); ctx.scale(1, ry / rx);
+          ctx.beginPath(); ctx.arc(cx, cy * (rx / ry), rx, 0, Math.PI * 2);
+          ctx.fillStyle = g; ctx.fill(); ctx.restore();
         });
         stars.forEach(s => {
-          s.x+=s.spd; if(s.x>1) s.x-=1;
-          const tw=0.45+0.55*Math.sin(t*s.tw*60+s.twOff);
-          const a=s.op*(0.35+0.65*tw);
-          ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
-          ctx.fillStyle=`rgba(215,228,255,${a})`; ctx.fill();
+          s.x += s.spd; if (s.x > 1) s.x -= 1;
+          const tw = 0.45 + 0.55 * Math.sin(t * s.tw * 60 + s.twOff);
+          const a = s.op * (0.35 + 0.65 * tw);
+          ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(215,228,255,${a})`; ctx.fill();
         });
-        for (let i=shoots.length-1;i>=0;i--) {
-          const s=shoots[i];
-          s.x+=Math.cos(s.angle)*s.spd; s.y+=Math.sin(s.angle)*s.spd; s.life-=s.decay;
-          if (s.life<=0||s.x>W||s.y>H) { shoots.splice(i,1); continue; }
-          const tx=s.x-Math.cos(s.angle)*s.len, ty=s.y-Math.sin(s.angle)*s.len;
-          const g=ctx.createLinearGradient(tx,ty,s.x,s.y);
-          g.addColorStop(0,"rgba(255,255,255,0)"); g.addColorStop(1,`rgba(255,255,255,${s.life*0.9})`);
-          ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(s.x,s.y);
-          ctx.strokeStyle=g; ctx.lineWidth=1.6; ctx.stroke();
+        for (let i = shoots.length - 1; i >= 0; i--) {
+          const s = shoots[i];
+          s.x += Math.cos(s.angle) * s.spd; s.y += Math.sin(s.angle) * s.spd; s.life -= s.decay;
+          if (s.life <= 0 || s.x > W || s.y > H) { shoots.splice(i, 1); continue; }
+          const tx = s.x - Math.cos(s.angle) * s.len, ty = s.y - Math.sin(s.angle) * s.len;
+          const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
+          g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(1, `rgba(255,255,255,${s.life * 0.9})`);
+          ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(s.x, s.y);
+          ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.stroke();
         }
       } else {
-        const sky=ctx.createLinearGradient(0,0,0,H);
-        sky.addColorStop(0,"#2196f3"); sky.addColorStop(0.35,"#64b5f6");
-        sky.addColorStop(0.7,"#b3e5fc"); sky.addColorStop(1,"#e1f5fe");
-        ctx.fillStyle=sky; ctx.fillRect(0,0,W,H);
-        const sx=W*0.80, sy=H*0.12, sr=Math.min(W,H)*0.065;
-        const glow=ctx.createRadialGradient(sx,sy,sr*0.3,sx,sy,sr*4);
-        glow.addColorStop(0,"rgba(255,245,80,0.55)"); glow.addColorStop(0.4,"rgba(255,220,40,0.16)"); glow.addColorStop(1,"rgba(255,200,0,0)");
-        ctx.beginPath(); ctx.arc(sx,sy,sr*4,0,Math.PI*2); ctx.fillStyle=glow; ctx.fill();
-        ctx.save(); ctx.translate(sx,sy);
-        for(let i=0;i<12;i++){
-          const a=(i/12)*Math.PI*2+t*0.008;
-          const r1=sr*1.35, r2=sr*(1.9+0.12*Math.sin(t*1.2+i));
-          ctx.beginPath(); ctx.moveTo(Math.cos(a)*r1,Math.sin(a)*r1); ctx.lineTo(Math.cos(a)*r2,Math.sin(a)*r2);
-          ctx.strokeStyle=`rgba(255,235,80,${0.4+0.2*Math.sin(t+i)})`; ctx.lineWidth=2.5; ctx.stroke();
+        const sky = ctx.createLinearGradient(0, 0, 0, H);
+        sky.addColorStop(0, "#2196f3"); sky.addColorStop(0.35, "#64b5f6");
+        sky.addColorStop(0.7, "#b3e5fc"); sky.addColorStop(1, "#e1f5fe");
+        ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+        const sx = W * 0.80, sy = H * 0.12, sr = Math.min(W, H) * 0.065;
+        const glow = ctx.createRadialGradient(sx, sy, sr * 0.3, sx, sy, sr * 4);
+        glow.addColorStop(0, "rgba(255,245,80,0.55)"); glow.addColorStop(0.4, "rgba(255,220,40,0.16)"); glow.addColorStop(1, "rgba(255,200,0,0)");
+        ctx.beginPath(); ctx.arc(sx, sy, sr * 4, 0, Math.PI * 2); ctx.fillStyle = glow; ctx.fill();
+        ctx.save(); ctx.translate(sx, sy);
+        for (let i = 0; i < 12; i++) {
+          const a = (i / 12) * Math.PI * 2 + t * 0.008;
+          const r1 = sr * 1.35, r2 = sr * (1.9 + 0.12 * Math.sin(t * 1.2 + i));
+          ctx.beginPath(); ctx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1); ctx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
+          ctx.strokeStyle = `rgba(255,235,80,${0.4 + 0.2 * Math.sin(t + i)})`; ctx.lineWidth = 2.5; ctx.stroke();
         }
         ctx.restore();
-        const disk=ctx.createRadialGradient(sx-sr*0.25,sy-sr*0.25,0,sx,sy,sr);
-        disk.addColorStop(0,"#fff9c4"); disk.addColorStop(0.5,"#ffe033"); disk.addColorStop(1,"#ffb700");
-        ctx.beginPath(); ctx.arc(sx,sy,sr,0,Math.PI*2); ctx.fillStyle=disk; ctx.fill();
+        const disk = ctx.createRadialGradient(sx - sr * 0.25, sy - sr * 0.25, 0, sx, sy, sr);
+        disk.addColorStop(0, "#fff9c4"); disk.addColorStop(0.5, "#ffe033"); disk.addColorStop(1, "#ffb700");
+        ctx.beginPath(); ctx.arc(sx, sy, sr, 0, Math.PI * 2); ctx.fillStyle = disk; ctx.fill();
         clouds.forEach(c => {
-          c.x+=c.spd; if(c.x>1.3) c.x=-0.3;
-          const cx2=c.x*W, cy2=c.y*H, rw=c.w*W, rh=c.h*H;
+          c.x += c.spd; if (c.x > 1.3) c.x = -0.3;
+          const cx2 = c.x * W, cy2 = c.y * H, rw = c.w * W, rh = c.h * H;
           c.puffs.forEach(p => {
-            const px=cx2+p.ox*rw, py=cy2+p.oy*rh, pr=p.rs*rh;
-            const cg=ctx.createRadialGradient(px,py-pr*0.2,0,px,py,pr*1.4);
-            cg.addColorStop(0,`rgba(255,255,255,${c.op})`);
-            cg.addColorStop(0.6,`rgba(240,245,255,${c.op*0.7})`); cg.addColorStop(1,"rgba(220,230,255,0)");
-            ctx.beginPath(); ctx.arc(px,py,pr*1.4,0,Math.PI*2); ctx.fillStyle=cg; ctx.fill();
+            const px = cx2 + p.ox * rw, py = cy2 + p.oy * rh, pr = p.rs * rh;
+            const cg = ctx.createRadialGradient(px, py - pr * 0.2, 0, px, py, pr * 1.4);
+            cg.addColorStop(0, `rgba(255,255,255,${c.op})`);
+            cg.addColorStop(0.6, `rgba(240,245,255,${c.op * 0.7})`); cg.addColorStop(1, "rgba(220,230,255,0)");
+            ctx.beginPath(); ctx.arc(px, py, pr * 1.4, 0, Math.PI * 2); ctx.fillStyle = cg; ctx.fill();
           });
         });
       }
       animRef.current = requestAnimationFrame(draw);
     };
     draw();
-    return () => { cancelAnimationFrame(animRef.current); clearInterval(shootInt); window.removeEventListener("resize",resize); };
+    return () => { cancelAnimationFrame(animRef.current); clearInterval(shootInt); window.removeEventListener("resize", resize); };
   }, [dark]);
 
-  return <canvas ref={canvasRef} style={{position:"fixed",inset:0,width:"100%",height:"100%",zIndex:0,pointerEvents:"none",display:"block"}}/>;
+  return <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none", display: "block" }} />;
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -322,19 +318,19 @@ function BackgroundCanvas({ dark }) {
    isCaller=false → waits for OFFER, sends ANSWER
 ───────────────────────────────────────────────────────── */
 function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
-  const localRef    = useRef(null);
-  const remoteRef   = useRef(null);
-  const pcRef       = useRef(null);
+  const localRef = useRef(null);
+  const remoteRef = useRef(null);
+  const pcRef = useRef(null);
   const localStream = useRef(null);
-  const signalSub   = useRef(null);
-  const endTimeout  = useRef(null);
+  const signalSub = useRef(null);
+  const endTimeout = useRef(null);
 
-  const [muted,  setMuted]  = useState(false);
+  const [muted, setMuted] = useState(false);
   const [camOff, setCamOff] = useState(false);
   const [status, setStatus] = useState(isCaller ? "Calling…" : "Connecting…");
-  const [secs,   setSecs]   = useState(0);
+  const [secs, setSecs] = useState(0);
   const durTimer = useRef(null);
-  const fmt = s => `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
+  const fmt = s => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 
   useEffect(() => {
     let pc;
@@ -380,7 +376,7 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
           console.log("Got remote track:", e.track.kind);
           if (remoteRef.current && e.streams[0]) {
             remoteRef.current.srcObject = e.streams[0];
-            remoteRef.current.play().catch(() => {});
+            remoteRef.current.play().catch(() => { });
           }
           setStatus("Connected");
           callStarted = true;
@@ -434,7 +430,7 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
           remoteDescSet = true;
           console.log("Remote desc set, flushing", pendingCandidates.length, "buffered candidates");
           for (const c of pendingCandidates) {
-            try { await pc.addIceCandidate(new RTCIceCandidate(c)); } catch (_) {}
+            try { await pc.addIceCandidate(new RTCIceCandidate(c)); } catch (_) { }
           }
           pendingCandidates = [];
         };
@@ -481,7 +477,7 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
             } else if (sig.type === "ICE") {
               const candidate = JSON.parse(sig.payload);
               if (remoteDescSet) {
-                try { await pc.addIceCandidate(new RTCIceCandidate(candidate)); } catch (_) {}
+                try { await pc.addIceCandidate(new RTCIceCandidate(candidate)); } catch (_) { }
               } else {
                 pendingCandidates.push(candidate);
               }
@@ -617,7 +613,7 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-          <button style={callBtnSt("#ef4444", 64)} onClick={onEnd}
+          <button style={callBtnSt("#ef4444", 64)} onClick={() => onEnd(secs)}
             onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
             <IcoPhoneOff color="#fff" />
@@ -656,31 +652,31 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
 function IncomingCallBanner({ from, mode, onAccept, onReject }) {
   return (
     <div style={{
-      position:"fixed",top:20,left:"50%",transform:"translateX(-50%)",
-      zIndex:200,minWidth:320,
-      background:"rgba(18,10,38,0.97)",backdropFilter:"blur(24px)",
-      border:"1px solid rgba(196,109,255,0.35)",borderRadius:20,
-      padding:"16px 22px",display:"flex",alignItems:"center",gap:16,
-      boxShadow:"0 16px 48px rgba(0,0,0,0.6)",
-      fontFamily:"'Plus Jakarta Sans',sans-serif",color:"#fff",
+      position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)",
+      zIndex: 200, minWidth: 320,
+      background: "rgba(18,10,38,0.97)", backdropFilter: "blur(24px)",
+      border: "1px solid rgba(196,109,255,0.35)", borderRadius: 20,
+      padding: "16px 22px", display: "flex", alignItems: "center", gap: 16,
+      boxShadow: "0 16px 48px rgba(0,0,0,0.6)",
+      fontFamily: "'Plus Jakarta Sans',sans-serif", color: "#fff",
     }}>
       <div style={{
-        width:44,height:44,borderRadius:"50%",flexShrink:0,
-        background:"linear-gradient(135deg,#c46dff,#7b8cff)",
-        display:"flex",alignItems:"center",justifyContent:"center",
-        fontSize:17,fontWeight:700,
-      }}>{(from||"?")[0].toUpperCase()}</div>
-      <div style={{flex:1}}>
-        <div style={{fontWeight:700,fontSize:14}}>{from}</div>
-        <div style={{fontSize:12,color:"rgba(255,255,255,0.55)",marginTop:2}}>
-          Incoming {mode==="video"?"video":"voice"} call…
+        width: 44, height: 44, borderRadius: "50%", flexShrink: 0,
+        background: "linear-gradient(135deg,#c46dff,#7b8cff)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 17, fontWeight: 700,
+      }}>{(from || "?")[0].toUpperCase()}</div>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontWeight: 700, fontSize: 14 }}>{from}</div>
+        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 2 }}>
+          Incoming {mode === "video" ? "video" : "voice"} call…
         </div>
       </div>
-      <button onClick={onReject} style={{width:38,height:38,borderRadius:"50%",border:"none",background:"#ef4444",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
-        <IcoPhoneOff color="#fff" size={18}/>
+      <button onClick={onReject} style={{ width: 38, height: 38, borderRadius: "50%", border: "none", background: "#ef4444", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <IcoPhoneOff color="#fff" size={18} />
       </button>
-      <button onClick={onAccept} style={{width:38,height:38,borderRadius:"50%",border:"none",background:"#22c55e",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
-        <IcoPhone color="#fff" size={18}/>
+      <button onClick={onAccept} style={{ width: 38, height: 38, borderRadius: "50%", border: "none", background: "#22c55e", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <IcoPhone color="#fff" size={18} />
       </button>
     </div>
   );
@@ -705,16 +701,16 @@ const buildCSS = (dark) => `
     --spring:       cubic-bezier(0.34,1.56,0.64,1);
     --out:          cubic-bezier(0.16,1,0.3,1);
 
-    --glass:        ${dark ? "rgba(10,7,22,0.66)"     : "rgba(255,255,255,0.65)"};
-    --glass2:       ${dark ? "rgba(15,10,32,0.78)"    : "rgba(255,255,255,0.88)"};
+    --glass:        ${dark ? "rgba(10,7,22,0.66)" : "rgba(255,255,255,0.65)"};
+    --glass2:       ${dark ? "rgba(15,10,32,0.78)" : "rgba(255,255,255,0.88)"};
     --glass-border: ${dark ? "rgba(255,255,255,0.09)" : "rgba(160,130,210,0.30)"};
     --divider:      ${dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)"};
-    --text:         ${dark ? "#ede8ff"                : "#160830"};
-    --text-sub:     ${dark ? "#9080b8"                : "#5a3e88"};
-    --text-muted:   ${dark ? "#4e4268"                : "#9980bb"};
-    --bubble-other: ${dark ? "rgba(28,18,52,0.88)"    : "rgba(255,255,255,0.95)"};
+    --text:         ${dark ? "#ede8ff" : "#160830"};
+    --text-sub:     ${dark ? "#9080b8" : "#5a3e88"};
+    --text-muted:   ${dark ? "#4e4268" : "#9980bb"};
+    --bubble-other: ${dark ? "rgba(28,18,52,0.88)" : "rgba(255,255,255,0.95)"};
     --bubble-ob:    ${dark ? "rgba(255,255,255,0.08)" : "rgba(160,130,210,0.28)"};
-    --input-bg:     ${dark ? "rgba(18,12,38,0.72)"    : "rgba(255,255,255,0.75)"};
+    --input-bg:     ${dark ? "rgba(18,12,38,0.72)" : "rgba(255,255,255,0.75)"};
     --scrollbar:    ${dark ? "rgba(196,109,255,0.22)" : "rgba(140,100,220,0.22)"};
     --hover:        ${dark ? "rgba(255,255,255,0.05)" : "rgba(120,80,200,0.08)"};
     --btn-bg:       ${dark ? "rgba(255,255,255,0.07)" : "rgba(120,80,200,0.10)"};
@@ -729,15 +725,15 @@ const buildCSS = (dark) => `
   .theme-fab {
     position:fixed; top:18px; right:18px; z-index:10;
     width:44px; height:26px; border:none; cursor:pointer; padding:0;
-    border-radius:999px; background:${dark?"rgba(30,18,55,0.85)":"rgba(255,255,255,0.85)"};
+    border-radius:999px; background:${dark ? "rgba(30,18,55,0.85)" : "rgba(255,255,255,0.85)"};
     backdrop-filter:blur(14px);
-    border:1.5px solid ${dark?"rgba(255,255,255,0.12)":"rgba(140,100,200,0.35)"};
+    border:1.5px solid ${dark ? "rgba(255,255,255,0.12)" : "rgba(140,100,200,0.35)"};
     box-shadow:0 3px 14px rgba(0,0,0,0.20);
   }
   .theme-thumb {
-    position:absolute; top:3px; left:${dark?"21px":"3px"};
+    position:absolute; top:3px; left:${dark ? "21px" : "3px"};
     width:20px; height:20px; border-radius:50%;
-    background:${dark?"#c46dff":"#ffe066"};
+    background:${dark ? "#c46dff" : "#ffe066"};
     display:flex; align-items:center; justify-content:center;
     pointer-events:none; transition:left 0.3s var(--spring);
     box-shadow:0 1px 5px rgba(0,0,0,0.25);
@@ -820,8 +816,8 @@ const buildCSS = (dark) => `
     display:flex; align-items:center; justify-content:center;
     font-size:17px; font-weight:700; color:#fff; position:relative;
   }
-  .c-av.story { box-shadow:0 0 0 2px ${dark?"#0b0810":"rgba(255,255,255,0.9)"}, 0 0 0 4px var(--accent); }
-  .c-online   { position:absolute; bottom:1px; right:1px; width:12px; height:12px; border-radius:50%; background:var(--green); border:2.5px solid ${dark?"#0f0a20":"#fff"}; }
+  .c-av.story { box-shadow:0 0 0 2px ${dark ? "#0b0810" : "rgba(255,255,255,0.9)"}, 0 0 0 4px var(--accent); }
+  .c-online   { position:absolute; bottom:1px; right:1px; width:12px; height:12px; border-radius:50%; background:var(--green); border:2.5px solid ${dark ? "#0f0a20" : "#fff"}; }
   .c-info  { flex:1; min-width:0; }
   .c-name  { font-size:13.5px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .contact-item.active .c-name { color:var(--accent); }
@@ -950,195 +946,225 @@ const buildCSS = (dark) => `
 /* ─────────────────────────────────────────────────────────
    HELPERS
 ───────────────────────────────────────────────────────── */
-const getTime = () => new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
+const getTime = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 const initial = n => (n || "?")[0].toUpperCase();
 
 /* ─────────────────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────────────────── */
-export default function Chat() {
-  const [dark,         setDark]       = useState(true);
-  const [name,         setName]       = useState("");
-  const [joined,       setJoined]     = useState(false);
-  const [message,      setMessage]    = useState("");
-  const [messages,     setMessages]   = useState([]);
-  const [recording,    setRecording]  = useState(false);
-  const [recordSecs,   setRecordSecs] = useState(0);
-  const [callMode,     setCallMode]   = useState(null);
-  const [isCaller,     setIsCaller]   = useState(false);
-  const [incomingCall, setIncoming]   = useState(null);
+export default function Chat({ authUser, authToken, onLogout }) {
+  const [dark, setDark] = useState(true);
+  const [name,   setName]   = useState(authUser || "");
+  const [joined, setJoined] = useState(!!authUser);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [recording, setRecording] = useState(false);
+  const [recordSecs, setRecordSecs] = useState(0);
+  const [callMode, setCallMode] = useState(null);
+  const [isCaller, setIsCaller] = useState(false);
+  const [incomingCall, setIncoming] = useState(null);
 
-  const stompClient   = useRef(null);
-  const messagesEnd   = useRef(null);
-  const inputRef      = useRef(null);
+  const stompClient = useRef(null);
+  const messagesEnd = useRef(null);
+  const inputRef = useRef(null);
   const imageInputRef = useRef(null);
-  const fileInputRef  = useRef(null);
-  const recordTimer   = useRef(null);
-  const recorderRef   = useRef(null);
-  const nameRef       = useRef(name);
+  const fileInputRef = useRef(null);
+  const recordTimer = useRef(null);
+  const recorderRef = useRef(null);
+  const nameRef = useRef(name);
   useEffect(() => { nameRef.current = name; }, [name]);
 
-  useEffect(() => { messagesEnd.current?.scrollIntoView({ behavior:"smooth" }); }, [messages]);
+  useEffect(() => {
+    if (authUser) connect();
+  }, []); // eslint-disable-line
+
+  useEffect(() => { messagesEnd.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
 
   /* ── CONNECT ── */
-const connect = () => {
-  const client = new Client({
-    webSocketFactory: () => new SockJS("http://192.168.100.127:8080/ws"),
-    reconnectDelay: 5000,
-    onConnect: () => {
-      client.subscribe("/topic/channel1", (res) => {
-        const msg = JSON.parse(res.body);
-        setMessages(prev => [...prev, { ...msg, time: getTime() }]);
+  const connect = () => {
+    const client = new Client({
+      webSocketFactory: () => new SockJS("http://192.168.100.127:8080/ws"),
+      reconnectDelay: 5000,
+      onConnect: async () => {
+        // Load message history
+        try {
+          const res = await fetch("http://192.168.100.127:8080/auth/history", {
+            headers: { Authorization: `Bearer ${authToken}` },
+          });
+          const history = await res.json();
+          setMessages(history.map(m => ({
+            ...m,
+            time: m.timestamp
+              ? new Date(m.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+              : getTime(),
+          })));
+        } catch { /* ignore */ }
+
+        client.subscribe("/topic/channel1", (res) => {
+          const msg = JSON.parse(res.body);
+          setMessages(prev => [...prev, { ...msg, time: getTime() }]);
+        });
+        client.subscribe("/topic/call-notify", (res) => {
+          const sig = JSON.parse(res.body);
+          if (sig.type === "RING" && sig.sender !== nameRef.current) {
+            setIncoming({ from: sig.sender, mode: sig.mode });
+          }
+        });
+      },
+      onStompError: (f) => console.error("STOMP:", f.headers["message"]),
+    });
+    client.activate();
+    stompClient.current = client;
+  };
+
+  /* ── SEND TEXT ── */
+  const sendMessage = () => {
+    if (stompClient.current?.connected && message.trim()) {
+      stompClient.current.publish({
+        destination: "/app/send",
+        body: JSON.stringify({
+          sender: nameRef.current,
+          content: message.trim(),
+        }),
       });
-      client.subscribe("/topic/call-notify", (res) => {
-        const sig = JSON.parse(res.body);
-        if (sig.type === "RING" && sig.sender !== nameRef.current) {
-          setIncoming({ from: sig.sender, mode: sig.mode });
+      setMessage("");
+    }
+  };
+
+  /* ── UPLOAD ── */
+  const BASE_URL = "http://192.168.100.127:8080";
+
+  const uploadFile = async (file, type) => {
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch(`${BASE_URL}/upload`, {
+        method: "POST",
+        body: fd,
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+
+      const rawUrl = await res.text();
+
+      // Ensure we always store a full absolute URL
+      const fileUrl = rawUrl.startsWith("http")
+        ? rawUrl
+        : `${BASE_URL}${rawUrl.startsWith("/") ? "" : "/"}${rawUrl}`;
+
+      stompClient.current.publish({
+        destination: "/app/send",
+        body: JSON.stringify({ sender: name, content: file.name || "", type, fileUrl }),
+      });
+    } catch (err) {
+      alert("Upload failed — is the server running?\n" + err.message);
+    }
+  };
+
+  const handleImageChange = e => { const f = e.target.files[0]; if (f) uploadFile(f, "IMAGE"); e.target.value = ""; };
+  const handleFileChange = e => { const f = e.target.files[0]; if (f) uploadFile(f, "FILE"); e.target.value = ""; };
+
+  /* ── VOICE RECORDING ── */
+  const startRecording = async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert("Your browser does not support microphone recording.");
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      recorderRef.current = recorder;
+
+      const chunks = [];
+
+      recorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          chunks.push(e.data);
         }
-      });
-    },
-    onStompError: (f) => console.error("STOMP:", f.headers["message"]),
-  });
-  client.activate();
-  stompClient.current = client;
-};
+      };
 
-const joinChat = () => { if (!name.trim()) return; connect(); setJoined(true); };
+      recorder.onstop = () => {
+        stream.getTracks().forEach(track => track.stop());
 
-/* ── SEND TEXT ── */
-const sendMessage = () => {
-  if (stompClient.current?.connected && message.trim()) {
-    stompClient.current.publish({
-      destination: "/app/send",
-      body: JSON.stringify({
-        sender: nameRef.current,
-        content: message.trim(),
-      }),
-    });
-    setMessage("");
-  }
-};
+        if (recordTimer.current) {
+          clearInterval(recordTimer.current);
+        }
 
-/* ── UPLOAD ── */
-const BASE_URL = "http://192.168.100.127:8080";
+        setRecording(false);
+        setRecordSecs(0);
 
-const uploadFile = async (file, type) => {
-  try {
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await fetch(`${BASE_URL}/upload`, {
-      method: "POST",
-      body: fd,
-    });
-    if (!res.ok) throw new Error("HTTP " + res.status);
+        const blob = new Blob(chunks, { type: "audio/webm" });
+        if (blob.size > 0) {
+          const file = new File([blob], "voice.webm", { type: "audio/webm" });
+          uploadFile(file, "AUDIO");
+        }
+      };
 
-    const rawUrl = await res.text();
+      recorder.start();
+      setRecording(true);
 
-    // Ensure we always store a full absolute URL
-    const fileUrl = rawUrl.startsWith("http")
-      ? rawUrl
-      : `${BASE_URL}${rawUrl.startsWith("/") ? "" : "/"}${rawUrl}`;
+      let seconds = 0;
+      recordTimer.current = setInterval(() => {
+        seconds++;
+        setRecordSecs(seconds);
+        if (seconds >= 60 && recorder.state !== "inactive") {
+          recorder.stop();
+        }
+      }, 1000);
 
-    stompClient.current.publish({
-      destination: "/app/send",
-      body: JSON.stringify({ sender: name, content: file.name || "", type, fileUrl }),
-    });
-  } catch (err) {
-    alert("Upload failed — is the server running?\n" + err.message);
-  }
-};
+    } catch (error) {
+      console.error("Microphone error:", error);
+      alert("Microphone access denied or unavailable.");
+    }
+  };
 
-const handleImageChange = e => { const f = e.target.files[0]; if (f) uploadFile(f, "IMAGE"); e.target.value = ""; };
-const handleFileChange  = e => { const f = e.target.files[0]; if (f) uploadFile(f, "FILE");  e.target.value = ""; };
-
-/* ── VOICE RECORDING ── */
-const startRecording = async () => {
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert("Your browser does not support microphone recording.");
-    return;
-  }
-
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const recorder = new MediaRecorder(stream);
-    recorderRef.current = recorder;
-
-    const chunks = [];
-
-    recorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) {
-        chunks.push(e.data);
-      }
-    };
-
-    recorder.onstop = () => {
-      stream.getTracks().forEach(track => track.stop());
-
-      if (recordTimer.current) {
-        clearInterval(recordTimer.current);
-      }
-
-      setRecording(false);
-      setRecordSecs(0);
-
-      const blob = new Blob(chunks, { type: "audio/webm" });
-      if (blob.size > 0) {
-        const file = new File([blob], "voice.webm", { type: "audio/webm" });
-        uploadFile(file, "AUDIO");
-      }
-    };
-
-    recorder.start();
-    setRecording(true);
-
-    let seconds = 0;
-    recordTimer.current = setInterval(() => {
-      seconds++;
-      setRecordSecs(seconds);
-      if (seconds >= 60 && recorder.state !== "inactive") {
-        recorder.stop();
-      }
-    }, 1000);
-
-  } catch (error) {
-    console.error("Microphone error:", error);
-    alert("Microphone access denied or unavailable.");
-  }
-};
-
-/* ── STOP RECORDING ── */
-const stopRecording = () => {
-  const recorder = recorderRef.current;
-  if (recorder && recorder.state !== "inactive") {
-    recorder.stop();
-  }
-};
+  /* ── STOP RECORDING ── */
+  const stopRecording = () => {
+    const recorder = recorderRef.current;
+    if (recorder && recorder.state !== "inactive") {
+      recorder.stop();
+    }
+  };
 
   /* ── CALLS ── */
   const startCall = (mode) => {
-  if (stompClient.current?.connected) {
-    stompClient.current.publish({
-      destination: "/app/call-notify", // server endpoint
-      body: JSON.stringify({ sender: nameRef.current, type: "RING", mode }),
-    });
-  }
-  setIsCaller(true);
-  setCallMode(mode);
-};
+    if (stompClient.current?.connected) {
+      stompClient.current.publish({
+        destination: "/app/call-notify", // server endpoint
+        body: JSON.stringify({ sender: nameRef.current, type: "RING", mode }),
+      });
+    }
+    setIsCaller(true);
+    setCallMode(mode);
+  };
 
-const acceptCall = () => {
-  const mode = incomingCall?.mode || "voice";
-  setIncoming(null);
-  setIsCaller(false);
-  setCallMode(mode);
-};
+  const acceptCall = () => {
+    const mode = incomingCall?.mode || "voice";
+    setIncoming(null);
+    setIsCaller(false);
+    setCallMode(mode);
+  };
 
-const rejectCall = () => setIncoming(null);
-const endCall = () => { setCallMode(null); setIsCaller(false); };
+  const rejectCall = () => setIncoming(null);
+  const endCall = (durationSecs) => {
+    if (durationSecs > 0 && stompClient.current?.connected) {
+      stompClient.current.publish({
+        destination: "/app/call-ended",
+        body: JSON.stringify({
+          sender: nameRef.current,
+          content: `Call ended — ${Math.floor(durationSecs / 60)}m ${durationSecs % 60}s`,
+          type: "CALL",
+          callDuration: durationSecs,
+        }),
+      });
+    }
+    setCallMode(null);
+    setIsCaller(false);
+  };
 
   /* ── INPUT HELPERS ── */
-  const handleKeyDown = e => { if (e.key==="Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
-  const handleInput   = e => {
+  const handleKeyDown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
+  const handleInput = e => {
     setMessage(e.target.value);
     e.target.style.height = "auto";
     e.target.style.height = Math.min(e.target.scrollHeight, 110) + "px";
@@ -1146,36 +1172,44 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
 
   /* ── RENDER MESSAGE ── */
   const renderContent = msg => {
-  const resolveUrl = (url) => {
-    if (!url) return "";
-    if (url.startsWith("http")) return url;
-    if (url.startsWith("/")) return `http://192.168.100.127:8080${url}`;
-    return `http://192.168.100.127:8080/${url}`;
-  };
+    if (msg.type === "CALL") {
+      return (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, opacity: 0.85 }}>
+          <IcoPhone color={msg.sender === name ? "#fff" : "var(--accent)"} size={14} />
+          <span style={{ fontSize: 13 }}>{msg.content}</span>
+        </div>
+      );
+    }
+    const resolveUrl = (url) => {
+      if (!url) return "";
+      if (url.startsWith("http")) return url;
+      if (url.startsWith("/")) return `http://192.168.100.127:8080${url}`;
+      return `http://192.168.100.127:8080/${url}`;
+    };
 
-  if (msg.type === "IMAGE") {
-    return (
-      <img
-        src={resolveUrl(msg.fileUrl)}
-        alt="img"
-        className="msg-img"
-        onError={e => { e.target.style.border="2px solid red"; e.target.alt="Failed: " + resolveUrl(msg.fileUrl); }}
-      />
-    );
-  }
-  if (msg.type === "FILE") {
-    return (
-      <a href={resolveUrl(msg.fileUrl)} target="_blank" rel="noreferrer" className="msg-file">
-        <span className="msg-file-ic"><IcoFile color="#fff" size={18}/></span>
-        <span>{msg.content || "Download File"}</span>
-      </a>
-    );
-  }
-  if (msg.type === "AUDIO") {
-    return <audio controls src={resolveUrl(msg.fileUrl)} className="msg-audio"/>;
-  }
-  return msg.content;
-};
+    if (msg.type === "IMAGE") {
+      return (
+        <img
+          src={resolveUrl(msg.fileUrl)}
+          alt="img"
+          className="msg-img"
+          onError={e => { e.target.style.border = "2px solid red"; e.target.alt = "Failed: " + resolveUrl(msg.fileUrl); }}
+        />
+      );
+    }
+    if (msg.type === "FILE") {
+      return (
+        <a href={resolveUrl(msg.fileUrl)} target="_blank" rel="noreferrer" className="msg-file">
+          <span className="msg-file-ic"><IcoFile color="#fff" size={18} /></span>
+          <span>{msg.content || "Download File"}</span>
+        </a>
+      );
+    }
+    if (msg.type === "AUDIO") {
+      return <audio controls src={resolveUrl(msg.fileUrl)} className="msg-audio" />;
+    }
+    return msg.content;
+  };
 
   useEffect(() => () => stompClient.current?.deactivate(), []);
 
@@ -1183,49 +1217,28 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
   const IC = dark ? "#a080d0" : "#7c4fbf";
 
   /* last preview for sidebar */
-  const lastMsg     = messages.slice(-1)[0];
+  const lastMsg = messages.slice(-1)[0];
   const lastPreview = !lastMsg ? "No messages yet"
-    : lastMsg.type==="IMAGE" ? "📷 Photo"
-    : lastMsg.type==="AUDIO" ? "🎤 Voice message"
-    : lastMsg.type==="FILE"  ? "📎 File"
-    : lastMsg.content;
+    : lastMsg.type === "IMAGE" ? "📷 Photo"
+      : lastMsg.type === "AUDIO" ? "🎤 Voice message"
+        : lastMsg.type === "FILE" ? "📎 File"
+          : lastMsg.content;
 
   /* ── THEME TOGGLE ── */
   const ThemeToggle = () => (
     <button className="theme-fab" onClick={() => setDark(d => !d)} title="Toggle theme">
       <div className="theme-thumb">
-        {dark ? <IcoMoon color="#fff" size={14}/> : <IcoSun color="#b45309" size={14}/>}
+        {dark ? <IcoMoon color="#fff" size={14} /> : <IcoSun color="#b45309" size={14} />}
       </div>
     </button>
   );
 
-  /* ════ JOIN ════ */
-  if (!joined) return (
-    <>
-      <style>{buildCSS(dark)}</style>
-      <BackgroundCanvas dark={dark}/>
-      <ThemeToggle/>
-      <div className="page">
-        <div className="join-card">
-          <div className="join-logo"><IcoPhone color="#fff" size={30}/></div>
-          <h1 className="join-title">Welcome back</h1>
-          <p className="join-sub">Enter your name to join the conversation</p>
-          <label className="join-label">Your display name</label>
-          <input className="join-input" value={name}
-            onChange={e => setName(e.target.value)}
-            onKeyDown={e => e.key==="Enter" && joinChat()}
-            placeholder="e.g. Alex Rivera" autoFocus/>
-          <button className="join-btn" onClick={joinChat}>Start chatting →</button>
-        </div>
-      </div>
-    </>
-  );
-
-  /* ════ CALL ════ */
+  /* ════ JOIN ════ — removed, login handled by App.jsx */
+ /* ════ CALL ════ */
   if (callMode) return (
     <>
       <style>{buildCSS(dark)}</style>
-      <CallOverlay mode={callMode} myName={name} isCaller={isCaller} stompClient={stompClient} onEnd={endCall}/>
+      <CallOverlay mode={callMode} myName={name} isCaller={isCaller} stompClient={stompClient} onEnd={endCall} />
     </>
   );
 
@@ -1233,8 +1246,8 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
   return (
     <>
       <style>{buildCSS(dark)}</style>
-      <BackgroundCanvas dark={dark}/>
-      <ThemeToggle/>
+      <BackgroundCanvas dark={dark} />
+      <ThemeToggle />
 
       {incomingCall && (
         <IncomingCallBanner
@@ -1249,16 +1262,24 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
           {/* ── SIDEBAR ── */}
           <div className="sidebar">
             <div className="sb-top">
-              <div className="sb-name">{name}<span className="sb-caret">▾</span></div>
+              <div className="sb-name">
+                {name}<span className="sb-caret">▾</span>
+                <button onClick={onLogout} style={{
+                  marginLeft: "auto", background: "rgba(251,113,133,0.15)",
+                  border: "1px solid rgba(251,113,133,0.3)", borderRadius: 8,
+                  color: "#fb7185", fontSize: 11, fontWeight: 700,
+                  padding: "3px 10px", cursor: "pointer", fontFamily: "inherit",
+                }}>Logout</button>
+              </div>
               <div className="sb-search">
-                <IcoSearch color={IC} size={16}/>
-                <input placeholder="Search"/>
+                <IcoSearch color={IC} size={16} />
+                <input placeholder="Search" />
               </div>
             </div>
             <div className="sb-section">Messages</div>
             <div className="contact-list">
               <div className="contact-item active">
-                <div className="c-av story">C<div className="c-online"/></div>
+                <div className="c-av story">C<div className="c-online" /></div>
                 <div className="c-info">
                   <div className="c-name">Channel 1</div>
                   <div className="c-last">{lastPreview}</div>
@@ -1276,17 +1297,17 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
               <div className="h-av">C</div>
               <div className="h-info">
                 <div className="h-name">Channel 1</div>
-                <div className="h-status"><span className="h-dot"/>Active now</div>
+                <div className="h-status"><span className="h-dot" />Active now</div>
               </div>
               <div className="h-actions">
                 <button className="h-btn" title="Voice call" onClick={() => startCall("voice")}>
-                  <IcoPhone color={IC} size={19}/>
+                  <IcoPhone color={IC} size={19} />
                 </button>
                 <button className="h-btn" title="Video call" onClick={() => startCall("video")}>
-                  <IcoVideo color={IC} size={19}/>
+                  <IcoVideo color={IC} size={19} />
                 </button>
                 <button className="h-btn" title="Info">
-                  <IcoInfo color={IC} size={19}/>
+                  <IcoInfo color={IC} size={19} />
                 </button>
               </div>
             </div>
@@ -1303,11 +1324,10 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
                 const me = msg.sender === name;
                 return (
                   <div key={i} className={`msg-group ${me ? "me" : "other"}`}>
-                    {/* Sender name — only show for OTHER people's messages */}
                     {!me && <div className="msg-sender">{msg.sender}</div>}
                     <div className="msg-row">
                       {!me && <div className="mini-av">{initial(msg.sender)}</div>}
-                      <div className={`msg-bubble${msg.type==="IMAGE"?" is-image":""}`}>
+                      <div className={`msg-bubble${msg.type === "IMAGE" ? " is-image" : ""}`}>
                         {renderContent(msg)}
                       </div>
                     </div>
@@ -1315,7 +1335,7 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
                   </div>
                 );
               })}
-              <div ref={messagesEnd}/>
+              <div ref={messagesEnd} />
             </div>
 
             {/* Input */}
@@ -1323,37 +1343,37 @@ const endCall = () => { setCallMode(null); setIsCaller(false); };
               <div className="input-row">
                 <textarea ref={inputRef} className="msg-ta"
                   value={message} onChange={handleInput} onKeyDown={handleKeyDown}
-                  placeholder="Message…" rows={1}/>
+                  placeholder="Message…" rows={1} />
                 <div className="input-icons">
                   <button className="ico-btn" title="Send photo" onClick={() => imageInputRef.current.click()}>
-                    <IcoImage color={IC} size={20}/>
+                    <IcoImage color={IC} size={20} />
                   </button>
                   <button className="ico-btn" title="Attach file" onClick={() => fileInputRef.current.click()}>
-                    <IcoPaperclip color={IC} size={20}/>
+                    <IcoPaperclip color={IC} size={20} />
                   </button>
-                  <button className={`ico-btn${recording?" rec":""}`}
-                    title={recording?"Stop recording":"Voice message"}
+                  <button className={`ico-btn${recording ? " rec" : ""}`}
+                    title={recording ? "Stop recording" : "Voice message"}
                     onClick={recording ? stopRecording : startRecording}>
                     {recording
-                      ? <IcoMicOff color="#ef4444" size={20}/>
-                      : <IcoMic color={IC} size={20}/>}
+                      ? <IcoMicOff color="#ef4444" size={20} />
+                      : <IcoMic color={IC} size={20} />}
                   </button>
                   <button className="send-btn" title="Send" onClick={sendMessage}>
-                    <IcoSend color="#fff" size={17}/>
+                    <IcoSend color="#fff" size={17} />
                   </button>
                 </div>
               </div>
               {recording && (
                 <div className="rec-badge">
-                  <span className="rec-dot"/> Recording {recordSecs}s — tap mic to stop
+                  <span className="rec-dot" /> Recording {recordSecs}s — tap mic to stop
                 </div>
               )}
             </div>
 
           </div>
 
-          <input type="file" accept="image/*" ref={imageInputRef} style={{display:"none"}} onChange={handleImageChange}/>
-          <input type="file" ref={fileInputRef} style={{display:"none"}} onChange={handleFileChange}/>
+          <input type="file" accept="image/*" ref={imageInputRef} style={{ display: "none" }} onChange={handleImageChange} />
+          <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleFileChange} />
 
         </div>
       </div>
