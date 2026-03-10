@@ -783,7 +783,7 @@ function AuthModal({ dark, initialMode, onClose, onAuth }) {
         <button className="auth-close" onClick={onClose}>✕</button>
         <div className="auth-logo-wrap">💬</div>
         <h2 className="auth-title">
-          {mode === "login" ? "Welcome back" : "Join CosmoChat Chat"}
+          {mode === "login" ? "Welcome back" : "Join CosmoChat"}
         </h2>
         <p className="auth-sub">
           {mode === "login"
@@ -874,7 +874,7 @@ export default function App() {
   ];
 
   const testimonials = [
-    { stars: "★★★★★", text: "CosmoChat Chat transformed how our remote team communicates. The voice call quality is absolutely outstanding.", name: "Maria Santos", role: "Engineering Lead", av: "M", bg: "linear-gradient(135deg,#7c3aed,#a855f7)" },
+    { stars: "★★★★★", text: "CosmoChat transformed how our remote team communicates. The voice call quality is absolutely outstanding.", name: "Maria Santos", role: "Engineering Lead", av: "M", bg: "linear-gradient(135deg,#7c3aed,#a855f7)" },
     { stars: "★★★★★", text: "I love how clean and fast everything feels. Switching between chat and video calls is buttery smooth.", name: "James Park", role: "Product Designer", av: "J", bg: "linear-gradient(135deg,#06b6d4,#7c3aed)" },
     { stars: "★★★★★", text: "The dark mode with the star background is gorgeous. It actually makes me want to use it more!", name: "Priya Nair", role: "Frontend Developer", av: "P", bg: "linear-gradient(135deg,#ec4899,#a855f7)" },
   ];
@@ -902,7 +902,7 @@ export default function App() {
       <nav className="nav">
         <div className="nav-logo">
           <div className="nav-logo-icon">💬</div>
-          CosmoChat Chat
+          CosmoChat
         </div>
         <div className="nav-spacer" />
         <div className="nav-actions">
@@ -927,7 +927,7 @@ export default function App() {
             <span className="hero-title-grad"> connect faster.</span>
           </h1>
           <p className="hero-sub">
-            CosmoChat Chat brings your team together with instant messaging, HD video calls, voice messages, and file sharing — all in one elegant interface.
+            CosmoChat brings your team together with instant messaging, HD video calls, voice messages, and file sharing — all in one elegant interface.
           </p>
           <div className="hero-actions">
             <button className="btn-primary" onClick={openRegister}>
@@ -1004,7 +1004,7 @@ export default function App() {
         <section className="section" style={{ paddingTop: 0 }}>
           <div className="section-label">Loved by users</div>
           <h2 className="section-title">What people are saying</h2>
-          <p className="section-sub">Real feedback from real users who rely on CosmoChat Chat every day.</p>
+          <p className="section-sub">Real feedback from real users who rely on CosmoChat every day.</p>
           <div className="testimonials-grid">
             {testimonials.map((t, i) => (
               <div key={i} className="testimonial-card">
@@ -1027,7 +1027,7 @@ export default function App() {
           <div className="cta-card">
             <div style={{ fontSize: 48, marginBottom: 20 }}>💬</div>
             <h2 className="cta-title">Ready to start the conversation?</h2>
-            <p className="cta-sub">Join CosmoChat Chat today. Free, fast, and beautiful on every device.</p>
+            <p className="cta-sub">Join CosmoChat today. Free, fast, and beautiful on every device.</p>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
               <button className="btn-primary" onClick={openRegister}>
                 Create free account →
@@ -1043,7 +1043,7 @@ export default function App() {
         <footer className="footer">
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div className="nav-logo-icon" style={{ width: 28, height: 28, fontSize: 14 }}>💬</div>
-            <span className="footer-copy">© 2025 CosmoChat Chat. Built with ❤️ and WebSockets.</span>
+            <span className="footer-copy">© 2025 CosmoChat. Built with ❤️ and WebSockets.</span>
           </div>
           <div className="footer-links">
             <button className="footer-link" onClick={openLogin}>Sign in</button>
