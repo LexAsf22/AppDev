@@ -21,6 +21,7 @@ public class FileUploadController {
     private static final Set<String> ALLOWED_TYPES = Set.of(
         "image/jpeg", "image/png", "image/gif", "image/webp",
         "audio/webm", "audio/ogg", "audio/mpeg",
+        "video/mp4", "video/webm", "video/ogg", "video/quicktime", "video/x-matroska",
         "application/pdf",
         "text/plain",
         "application/msword",

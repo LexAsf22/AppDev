@@ -735,8 +735,8 @@ function AuthModal({ dark, initialMode, onClose, onAuth }) {
   const [confirm,  setConfirm]  = useState("");
   const [error,    setError]    = useState("");
   const [loading,  setLoading]  = useState(false);
-
-  const reset = () => { setError(""); setPassword(""); setConfirm(""); };
+  const [success,  setSuccess]  = useState("");
+  const reset = () => { setError(""); setPassword(""); setConfirm(""); setSuccess(""); };
   const switchMode = (m) => { setMode(m); reset(); };
 
   const handleLogin = async () => {
@@ -768,7 +768,11 @@ function AuthModal({ dark, initialMode, onClose, onAuth }) {
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || "Registration failed"); setLoading(false); return; }
-      onAuth({ token: data.token, username: data.username });
+      setMode("login");
+      setPassword("");
+      setConfirm("");
+      setError("");
+      setSuccess("Account created! Please sign in.");
     } catch { setError("Cannot connect to server"); }
     setLoading(false);
   };
@@ -796,6 +800,11 @@ function AuthModal({ dark, initialMode, onClose, onAuth }) {
           <button className={`auth-tab ${mode === "register" ? "active" : ""}`} onClick={() => switchMode("register")}>Register</button>
         </div>
 
+        {success && (
+          <div style={{ fontSize:13, color:"#10b981", marginBottom:16, padding:"10px 14px", background:"rgba(16,185,129,0.09)", borderRadius:10, border:"1px solid rgba(16,185,129,0.22)", textAlign:"left" }}>
+            ✅ {success}
+          </div>
+        )}
         {error && <div className="auth-error">⚠️ {error}</div>}
 
         <div className="auth-field">
@@ -855,14 +864,16 @@ function AuthModal({ dark, initialMode, onClose, onAuth }) {
 ───────────────────────────────────────────────────────── */
 export default function App() {
   const [dark,      setDark]     = useState(true);
-  const [auth,      setAuth]     = useState(null);
+  const [auth,      setAuth]     = useState(() => {
+    try { const s = localStorage.getItem("cosmo_auth"); return s ? JSON.parse(s) : null; } catch { return null; }
+  });
   const [showAuth,  setShowAuth] = useState(false);
   const [authMode,  setAuthMode] = useState("login");
 
   const openLogin    = () => { setAuthMode("login");    setShowAuth(true); };
   const openRegister = () => { setAuthMode("register"); setShowAuth(true); };
-  const handleAuth   = (data) => { setAuth(data); setShowAuth(false); };
-  const handleLogout = () => { setAuth(null); setAuthMode("login"); };
+  const handleAuth   = (data) => { localStorage.setItem("cosmo_auth", JSON.stringify(data)); setAuth(data); setShowAuth(false); };
+  const handleLogout = () => { localStorage.removeItem("cosmo_auth"); setAuth(null); setAuthMode("login"); };
 
   const features = [
     { icon: "⚡", color: "#7c3aed", bg: "rgba(124,58,237,0.12)", title: "Real-Time Messaging", desc: "Instant message delivery powered by WebSocket technology. No delays, no refresh — just seamless conversation." },

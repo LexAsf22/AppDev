@@ -1630,6 +1630,7 @@ export default function Chat({ authUser, authToken, onLogout }) {
   const inputRef = useRef(null);
   const imageInputRef = useRef(null);
   const fileInputRef = useRef(null);
+  const videoInputRef = useRef(null);
   const recordTimer = useRef(null);
   const recorderRef = useRef(null);
   const nameRef = useRef(name);
@@ -1749,6 +1750,11 @@ export default function Chat({ authUser, authToken, onLogout }) {
   const handleFileChange = (e) => {
     const f = e.target.files[0];
     if (f) uploadFile(f, "FILE");
+    e.target.value = "";
+  };
+  const handleVideoChange = (e) => {
+    const f = e.target.files[0];
+    if (f) uploadFile(f, "VIDEO");
     e.target.value = "";
   };
 
@@ -1927,6 +1933,11 @@ export default function Chat({ authUser, authToken, onLogout }) {
         <audio controls src={resolveUrl(msg.fileUrl)} className="msg-audio" />
       );
     }
+    if (msg.type === "VIDEO") {
+      return (
+        <video controls src={resolveUrl(msg.fileUrl)} style={{ maxWidth: 280, maxHeight: 200, borderRadius: 14, display: "block", boxShadow: "0 5px 22px rgba(0,0,0,0.28)" }} />
+      );
+    }
     return msg.content;
   };
 
@@ -1943,7 +1954,9 @@ export default function Chat({ authUser, authToken, onLogout }) {
       ? "📷 Photo"
       : lastMsg.type === "AUDIO"
         ? "🎤 Voice message"
-        : lastMsg.type === "FILE"
+        : lastMsg.type === "VIDEO"
+          ? "🎬 Video"
+          : lastMsg.type === "FILE"
           ? "📎 File"
           : lastMsg.content;
 
@@ -2140,6 +2153,13 @@ export default function Chat({ authUser, authToken, onLogout }) {
                     <IcoPaperclip color={IC} size={20} />
                   </button>
                   <button
+                    className="ico-btn"
+                    title="Send video"
+                    onClick={() => videoInputRef.current.click()}
+                  >
+                    <IcoVideo color={IC} size={20} />
+                  </button>
+                  <button
                     className={`ico-btn${recording ? " rec" : ""}`}
                     title={recording ? "Stop recording" : "Voice message"}
                     onClick={recording ? stopRecording : startRecording}
@@ -2180,6 +2200,13 @@ export default function Chat({ authUser, authToken, onLogout }) {
             ref={fileInputRef}
             style={{ display: "none" }}
             onChange={handleFileChange}
+          />
+          <input
+            type="file"
+            accept="video/*"
+            ref={videoInputRef}
+            style={{ display: "none" }}
+            onChange={handleVideoChange}
           />
         </div>
       </div>
