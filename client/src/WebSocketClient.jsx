@@ -14,10 +14,17 @@ function IcoSend({ size = 18, color = "#fff" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s}>
-      <line x1="22" y1="2" x2="11" y2="13"
-        style={{ stroke: color, strokeWidth: 2.2, strokeLinecap: "round" }} />
-      <polygon points="22 2 15 22 11 13 2 9 22 2"
-        style={{ fill: color, stroke: "none" }} />
+      <line
+        x1="22"
+        y1="2"
+        x2="11"
+        y2="13"
+        style={{ stroke: color, strokeWidth: 2.2, strokeLinecap: "round" }}
+      />
+      <polygon
+        points="22 2 15 22 11 13 2 9 22 2"
+        style={{ fill: color, stroke: "none" }}
+      />
     </svg>
   );
 }
@@ -26,11 +33,30 @@ function IcoImage({ size = 20, color = "#8b6fd4" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <rect x="3" y="3" width="18" height="18" rx="2"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
+      <rect
+        x="3"
+        y="3"
+        width="18"
+        height="18"
+        rx="2"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
       <circle cx="8.5" cy="8.5" r="1.5" style={{ fill: color }} />
-      <polyline points="21 15 16 10 5 21"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round", fill: "none" }} />
+      <polyline
+        points="21 15 16 10 5 21"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          fill: "none",
+        }}
+      />
     </svg>
   );
 }
@@ -39,8 +65,16 @@ function IcoPaperclip({ size = 20, color = "#8b6fd4" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round", fill: "none" }} />
+      <path
+        d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          fill: "none",
+        }}
+      />
     </svg>
   );
 }
@@ -49,14 +83,37 @@ function IcoMic({ size = 20, color = "#8b6fd4" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <rect x="9" y="1" width="6" height="11" rx="3"
-        style={{ stroke: color, strokeWidth: 1.9, fill: "none" }} />
-      <path d="M5 10v2a7 7 0 0 0 14 0v-2"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
-      <line x1="12" y1="19" x2="12" y2="23"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }} />
-      <line x1="8" y1="23" x2="16" y2="23"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }} />
+      <rect
+        x="9"
+        y="1"
+        width="6"
+        height="11"
+        rx="3"
+        style={{ stroke: color, strokeWidth: 1.9, fill: "none" }}
+      />
+      <path
+        d="M5 10v2a7 7 0 0 0 14 0v-2"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
+      <line
+        x1="12"
+        y1="19"
+        x2="12"
+        y2="23"
+        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }}
+      />
+      <line
+        x1="8"
+        y1="23"
+        x2="16"
+        y2="23"
+        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }}
+      />
     </svg>
   );
 }
@@ -65,18 +122,54 @@ function IcoMicOff({ size = 20, color = "#ef4444" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <line x1="1" y1="1" x2="23" y2="23"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }} />
-      <path d="M9 9v3a3 3 0 0 0 5.12 2.12"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
-      <path d="M15 9.34V4a3 3 0 0 0-5.94-.6"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
-      <path d="M17 16.95A7 7 0 0 1 5 12v-2"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
-      <line x1="12" y1="19" x2="12" y2="23"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }} />
-      <line x1="8" y1="23" x2="16" y2="23"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }} />
+      <line
+        x1="1"
+        y1="1"
+        x2="23"
+        y2="23"
+        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }}
+      />
+      <path
+        d="M9 9v3a3 3 0 0 0 5.12 2.12"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
+      <path
+        d="M15 9.34V4a3 3 0 0 0-5.94-.6"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
+      <path
+        d="M17 16.95A7 7 0 0 1 5 12v-2"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
+      <line
+        x1="12"
+        y1="19"
+        x2="12"
+        y2="23"
+        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }}
+      />
+      <line
+        x1="8"
+        y1="23"
+        x2="16"
+        y2="23"
+        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }}
+      />
     </svg>
   );
 }
@@ -85,8 +178,10 @@ function IcoPhone({ size = 20, color = "#8b6fd4" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s}>
-      <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
-        style={{ fill: color, stroke: "none" }} />
+      <path
+        d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"
+        style={{ fill: color, stroke: "none" }}
+      />
     </svg>
   );
 }
@@ -95,10 +190,23 @@ function IcoPhoneOff({ size = 22, color = "#fff" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c1.12.45 2.3.7 3.53.7a2 2 0 0 1 2 2v3.5a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2h3.5a2 2 0 0 1 2 2c0 1.23.25 2.41.7 3.53a2 2 0 0 1-.45 2.11L10.68 13.31z"
-        style={{ stroke: color, strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", fill: "none" }} />
-      <line x1="1" y1="1" x2="23" y2="23"
-        style={{ stroke: color, strokeWidth: 2, strokeLinecap: "round" }} />
+      <path
+        d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c1.12.45 2.3.7 3.53.7a2 2 0 0 1 2 2v3.5a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2h3.5a2 2 0 0 1 2 2c0 1.23.25 2.41.7 3.53a2 2 0 0 1-.45 2.11L10.68 13.31z"
+        style={{
+          stroke: color,
+          strokeWidth: 2,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          fill: "none",
+        }}
+      />
+      <line
+        x1="1"
+        y1="1"
+        x2="23"
+        y2="23"
+        style={{ stroke: color, strokeWidth: 2, strokeLinecap: "round" }}
+      />
     </svg>
   );
 }
@@ -107,10 +215,18 @@ function IcoVideo({ size = 20, color = "#8b6fd4" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <rect x="1" y="5" width="15" height="14" rx="2"
-        style={{ stroke: color, strokeWidth: 1.9, fill: "none" }} />
-      <polygon points="23 7 16 12 23 17 23 7"
-        style={{ fill: color, stroke: "none" }} />
+      <rect
+        x="1"
+        y="5"
+        width="15"
+        height="14"
+        rx="2"
+        style={{ stroke: color, strokeWidth: 1.9, fill: "none" }}
+      />
+      <polygon
+        points="23 7 16 12 23 17 23 7"
+        style={{ fill: color, stroke: "none" }}
+      />
     </svg>
   );
 }
@@ -119,12 +235,31 @@ function IcoVideoOff({ size = 20, color = "#ef4444" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
-      <path d="M10.66 5H14a2 2 0 0 1 2 2v3.34l1 1L23 7v10"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
-      <line x1="1" y1="1" x2="23" y2="23"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }} />
+      <path
+        d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
+      <path
+        d="M10.66 5H14a2 2 0 0 1 2 2v3.34l1 1L23 7v10"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
+      <line
+        x1="1"
+        y1="1"
+        x2="23"
+        y2="23"
+        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }}
+      />
     </svg>
   );
 }
@@ -133,12 +268,25 @@ function IcoInfo({ size = 20, color = "#8b6fd4" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <circle cx="12" cy="12" r="10"
-        style={{ stroke: color, strokeWidth: 1.9, fill: "none" }} />
-      <line x1="12" y1="16" x2="12" y2="12"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }} />
-      <circle cx="12" cy="8" r="0.5"
-        style={{ fill: color, stroke: color, strokeWidth: 1.5 }} />
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        style={{ stroke: color, strokeWidth: 1.9, fill: "none" }}
+      />
+      <line
+        x1="12"
+        y1="16"
+        x2="12"
+        y2="12"
+        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round" }}
+      />
+      <circle
+        cx="12"
+        cy="8"
+        r="0.5"
+        style={{ fill: color, stroke: color, strokeWidth: 1.5 }}
+      />
     </svg>
   );
 }
@@ -147,10 +295,19 @@ function IcoSearch({ size = 16, color = "#8b6fd4" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <circle cx="11" cy="11" r="8"
-        style={{ stroke: color, strokeWidth: 2.2, fill: "none" }} />
-      <line x1="21" y1="21" x2="16.65" y2="16.65"
-        style={{ stroke: color, strokeWidth: 2.2, strokeLinecap: "round" }} />
+      <circle
+        cx="11"
+        cy="11"
+        r="8"
+        style={{ stroke: color, strokeWidth: 2.2, fill: "none" }}
+      />
+      <line
+        x1="21"
+        y1="21"
+        x2="16.65"
+        y2="16.65"
+        style={{ stroke: color, strokeWidth: 2.2, strokeLinecap: "round" }}
+      />
     </svg>
   );
 }
@@ -159,14 +316,23 @@ function IcoSun({ size = 16, color = "#d97706" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <circle cx="12" cy="12" r="5" style={{ stroke: color, strokeWidth: 2, fill: "none" }} />
+      <circle
+        cx="12"
+        cy="12"
+        r="5"
+        style={{ stroke: color, strokeWidth: 2, fill: "none" }}
+      />
       {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
-        const r = Math.PI * deg / 180;
+        const r = (Math.PI * deg) / 180;
         return (
-          <line key={i}
-            x1={12 + 8 * Math.cos(r)} y1={12 + 8 * Math.sin(r)}
-            x2={12 + 11 * Math.cos(r)} y2={12 + 11 * Math.sin(r)}
-            style={{ stroke: color, strokeWidth: 2, strokeLinecap: "round" }} />
+          <line
+            key={i}
+            x1={12 + 8 * Math.cos(r)}
+            y1={12 + 8 * Math.sin(r)}
+            x2={12 + 11 * Math.cos(r)}
+            y2={12 + 11 * Math.sin(r)}
+            style={{ stroke: color, strokeWidth: 2, strokeLinecap: "round" }}
+          />
         );
       })}
     </svg>
@@ -177,8 +343,10 @@ function IcoMoon({ size = 16, color = "#fff" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s}>
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-        style={{ fill: color, stroke: "none" }} />
+      <path
+        d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+        style={{ fill: color, stroke: "none" }}
+      />
     </svg>
   );
 }
@@ -187,10 +355,25 @@ function IcoFile({ size = 18, color = "#fff" }) {
   const s = svgBase(size);
   return (
     <svg viewBox="0 0 24 24" style={s} fill="none">
-      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", fill: "none" }} />
-      <polyline points="13 2 13 9 20 9"
-        style={{ stroke: color, strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round", fill: "none" }} />
+      <path
+        d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          fill: "none",
+        }}
+      />
+      <polyline
+        points="13 2 13 9 20 9"
+        style={{
+          stroke: color,
+          strokeWidth: 1.9,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          fill: "none",
+        }}
+      />
     </svg>
   );
 }
@@ -206,110 +389,220 @@ function BackgroundCanvas({ dark }) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     let W, H;
-    const resize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
+    const resize = () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    };
     resize();
     window.addEventListener("resize", resize);
     let t = 0;
 
     const stars = Array.from({ length: 300 }, () => ({
-      x: Math.random(), y: Math.random(), r: Math.random() * 1.6 + 0.2,
-      spd: Math.random() * 0.0001 + 0.00003, op: Math.random() * 0.75 + 0.25,
-      tw: Math.random() * 0.025 + 0.004, twOff: Math.random() * Math.PI * 2,
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.6 + 0.2,
+      spd: Math.random() * 0.0001 + 0.00003,
+      op: Math.random() * 0.75 + 0.25,
+      tw: Math.random() * 0.025 + 0.004,
+      twOff: Math.random() * Math.PI * 2,
     }));
     const NEBULAS = [
-      { cx: 0.15, cy: 0.25, rx: 0.30, ry: 0.22, h: 260, s: 80 },
-      { cx: 0.75, cy: 0.60, rx: 0.32, ry: 0.26, h: 200, s: 70 },
-      { cx: 0.50, cy: 0.55, rx: 0.38, ry: 0.22, h: 300, s: 60 },
+      { cx: 0.15, cy: 0.25, rx: 0.3, ry: 0.22, h: 260, s: 80 },
+      { cx: 0.75, cy: 0.6, rx: 0.32, ry: 0.26, h: 200, s: 70 },
+      { cx: 0.5, cy: 0.55, rx: 0.38, ry: 0.22, h: 300, s: 60 },
       { cx: 0.88, cy: 0.18, rx: 0.22, ry: 0.18, h: 240, s: 75 },
     ];
     const shoots = [];
-    const shootInt = setInterval(() => shoots.push({
-      x: Math.random() * W, y: Math.random() * H * 0.45,
-      len: Math.random() * 140 + 60, spd: Math.random() * 9 + 6,
-      angle: Math.PI / 5 + (Math.random() - 0.5) * 0.3,
-      life: 1, decay: Math.random() * 0.016 + 0.010,
-    }), 2600);
+    const shootInt = setInterval(
+      () =>
+        shoots.push({
+          x: Math.random() * W,
+          y: Math.random() * H * 0.45,
+          len: Math.random() * 140 + 60,
+          spd: Math.random() * 9 + 6,
+          angle: Math.PI / 5 + (Math.random() - 0.5) * 0.3,
+          life: 1,
+          decay: Math.random() * 0.016 + 0.01,
+        }),
+      2600,
+    );
 
     const clouds = Array.from({ length: 7 }, () => ({
-      x: Math.random(), y: 0.05 + Math.random() * 0.45,
-      w: 0.12 + Math.random() * 0.18, h: 0.04 + Math.random() * 0.06,
-      spd: 0.00004 + Math.random() * 0.00005, op: 0.55 + Math.random() * 0.35,
+      x: Math.random(),
+      y: 0.05 + Math.random() * 0.45,
+      w: 0.12 + Math.random() * 0.18,
+      h: 0.04 + Math.random() * 0.06,
+      spd: 0.00004 + Math.random() * 0.00005,
+      op: 0.55 + Math.random() * 0.35,
       puffs: Array.from({ length: 5 + Math.floor(Math.random() * 4) }, () => ({
-        ox: (Math.random() - 0.4) * 0.9, oy: (Math.random() - 0.5) * 0.5, rs: 0.4 + Math.random() * 0.7,
+        ox: (Math.random() - 0.4) * 0.9,
+        oy: (Math.random() - 0.5) * 0.5,
+        rs: 0.4 + Math.random() * 0.7,
       })),
     }));
 
     const draw = () => {
-      t += 0.010;
+      t += 0.01;
       if (dark) {
-        ctx.fillStyle = "#03030a"; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#03030a";
+        ctx.fillRect(0, 0, W, H);
         NEBULAS.forEach((n, i) => {
           const drift = Math.sin(t * 0.15 + i * 1.4) * 0.022;
-          const cx = (n.cx + drift) * W, cy = n.cy * H, rx = n.rx * W, ry = n.ry * H;
-          const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+          const cx = (n.cx + drift) * W,
+            cy = n.cy * H,
+            rx = n.rx * W,
+            ry = n.ry * H;
+          const g = ctx.createRadialGradient(
+            cx,
+            cy,
+            0,
+            cx,
+            cy,
+            Math.max(rx, ry),
+          );
           g.addColorStop(0, `hsla(${n.h},${n.s}%,58%,0.14)`);
           g.addColorStop(0.5, `hsla(${n.h + 20},${n.s - 10}%,48%,0.06)`);
           g.addColorStop(1, `hsla(${n.h},${n.s}%,38%,0)`);
-          ctx.save(); ctx.scale(1, ry / rx);
-          ctx.beginPath(); ctx.arc(cx, cy * (rx / ry), rx, 0, Math.PI * 2);
-          ctx.fillStyle = g; ctx.fill(); ctx.restore();
+          ctx.save();
+          ctx.scale(1, ry / rx);
+          ctx.beginPath();
+          ctx.arc(cx, cy * (rx / ry), rx, 0, Math.PI * 2);
+          ctx.fillStyle = g;
+          ctx.fill();
+          ctx.restore();
         });
-        stars.forEach(s => {
-          s.x += s.spd; if (s.x > 1) s.x -= 1;
+        stars.forEach((s) => {
+          s.x += s.spd;
+          if (s.x > 1) s.x -= 1;
           const tw = 0.45 + 0.55 * Math.sin(t * s.tw * 60 + s.twOff);
           const a = s.op * (0.35 + 0.65 * tw);
-          ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(215,228,255,${a})`; ctx.fill();
+          ctx.beginPath();
+          ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(215,228,255,${a})`;
+          ctx.fill();
         });
         for (let i = shoots.length - 1; i >= 0; i--) {
           const s = shoots[i];
-          s.x += Math.cos(s.angle) * s.spd; s.y += Math.sin(s.angle) * s.spd; s.life -= s.decay;
-          if (s.life <= 0 || s.x > W || s.y > H) { shoots.splice(i, 1); continue; }
-          const tx = s.x - Math.cos(s.angle) * s.len, ty = s.y - Math.sin(s.angle) * s.len;
+          s.x += Math.cos(s.angle) * s.spd;
+          s.y += Math.sin(s.angle) * s.spd;
+          s.life -= s.decay;
+          if (s.life <= 0 || s.x > W || s.y > H) {
+            shoots.splice(i, 1);
+            continue;
+          }
+          const tx = s.x - Math.cos(s.angle) * s.len,
+            ty = s.y - Math.sin(s.angle) * s.len;
           const g = ctx.createLinearGradient(tx, ty, s.x, s.y);
-          g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(1, `rgba(255,255,255,${s.life * 0.9})`);
-          ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(s.x, s.y);
-          ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.stroke();
+          g.addColorStop(0, "rgba(255,255,255,0)");
+          g.addColorStop(1, `rgba(255,255,255,${s.life * 0.9})`);
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(s.x, s.y);
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
         }
       } else {
         const sky = ctx.createLinearGradient(0, 0, 0, H);
-        sky.addColorStop(0, "#2196f3"); sky.addColorStop(0.35, "#64b5f6");
-        sky.addColorStop(0.7, "#b3e5fc"); sky.addColorStop(1, "#e1f5fe");
-        ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
-        const sx = W * 0.80, sy = H * 0.12, sr = Math.min(W, H) * 0.065;
+        sky.addColorStop(0, "#2196f3");
+        sky.addColorStop(0.35, "#64b5f6");
+        sky.addColorStop(0.7, "#b3e5fc");
+        sky.addColorStop(1, "#e1f5fe");
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, W, H);
+        const sx = W * 0.8,
+          sy = H * 0.12,
+          sr = Math.min(W, H) * 0.065;
         const glow = ctx.createRadialGradient(sx, sy, sr * 0.3, sx, sy, sr * 4);
-        glow.addColorStop(0, "rgba(255,245,80,0.55)"); glow.addColorStop(0.4, "rgba(255,220,40,0.16)"); glow.addColorStop(1, "rgba(255,200,0,0)");
-        ctx.beginPath(); ctx.arc(sx, sy, sr * 4, 0, Math.PI * 2); ctx.fillStyle = glow; ctx.fill();
-        ctx.save(); ctx.translate(sx, sy);
+        glow.addColorStop(0, "rgba(255,245,80,0.55)");
+        glow.addColorStop(0.4, "rgba(255,220,40,0.16)");
+        glow.addColorStop(1, "rgba(255,200,0,0)");
+        ctx.beginPath();
+        ctx.arc(sx, sy, sr * 4, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+        ctx.save();
+        ctx.translate(sx, sy);
         for (let i = 0; i < 12; i++) {
           const a = (i / 12) * Math.PI * 2 + t * 0.008;
-          const r1 = sr * 1.35, r2 = sr * (1.9 + 0.12 * Math.sin(t * 1.2 + i));
-          ctx.beginPath(); ctx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1); ctx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
-          ctx.strokeStyle = `rgba(255,235,80,${0.4 + 0.2 * Math.sin(t + i)})`; ctx.lineWidth = 2.5; ctx.stroke();
+          const r1 = sr * 1.35,
+            r2 = sr * (1.9 + 0.12 * Math.sin(t * 1.2 + i));
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1);
+          ctx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
+          ctx.strokeStyle = `rgba(255,235,80,${0.4 + 0.2 * Math.sin(t + i)})`;
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
         }
         ctx.restore();
-        const disk = ctx.createRadialGradient(sx - sr * 0.25, sy - sr * 0.25, 0, sx, sy, sr);
-        disk.addColorStop(0, "#fff9c4"); disk.addColorStop(0.5, "#ffe033"); disk.addColorStop(1, "#ffb700");
-        ctx.beginPath(); ctx.arc(sx, sy, sr, 0, Math.PI * 2); ctx.fillStyle = disk; ctx.fill();
-        clouds.forEach(c => {
-          c.x += c.spd; if (c.x > 1.3) c.x = -0.3;
-          const cx2 = c.x * W, cy2 = c.y * H, rw = c.w * W, rh = c.h * H;
-          c.puffs.forEach(p => {
-            const px = cx2 + p.ox * rw, py = cy2 + p.oy * rh, pr = p.rs * rh;
-            const cg = ctx.createRadialGradient(px, py - pr * 0.2, 0, px, py, pr * 1.4);
+        const disk = ctx.createRadialGradient(
+          sx - sr * 0.25,
+          sy - sr * 0.25,
+          0,
+          sx,
+          sy,
+          sr,
+        );
+        disk.addColorStop(0, "#fff9c4");
+        disk.addColorStop(0.5, "#ffe033");
+        disk.addColorStop(1, "#ffb700");
+        ctx.beginPath();
+        ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+        ctx.fillStyle = disk;
+        ctx.fill();
+        clouds.forEach((c) => {
+          c.x += c.spd;
+          if (c.x > 1.3) c.x = -0.3;
+          const cx2 = c.x * W,
+            cy2 = c.y * H,
+            rw = c.w * W,
+            rh = c.h * H;
+          c.puffs.forEach((p) => {
+            const px = cx2 + p.ox * rw,
+              py = cy2 + p.oy * rh,
+              pr = p.rs * rh;
+            const cg = ctx.createRadialGradient(
+              px,
+              py - pr * 0.2,
+              0,
+              px,
+              py,
+              pr * 1.4,
+            );
             cg.addColorStop(0, `rgba(255,255,255,${c.op})`);
-            cg.addColorStop(0.6, `rgba(240,245,255,${c.op * 0.7})`); cg.addColorStop(1, "rgba(220,230,255,0)");
-            ctx.beginPath(); ctx.arc(px, py, pr * 1.4, 0, Math.PI * 2); ctx.fillStyle = cg; ctx.fill();
+            cg.addColorStop(0.6, `rgba(240,245,255,${c.op * 0.7})`);
+            cg.addColorStop(1, "rgba(220,230,255,0)");
+            ctx.beginPath();
+            ctx.arc(px, py, pr * 1.4, 0, Math.PI * 2);
+            ctx.fillStyle = cg;
+            ctx.fill();
           });
         });
       }
       animRef.current = requestAnimationFrame(draw);
     };
     draw();
-    return () => { cancelAnimationFrame(animRef.current); clearInterval(shootInt); window.removeEventListener("resize", resize); };
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      clearInterval(shootInt);
+      window.removeEventListener("resize", resize);
+    };
   }, [dark]);
 
-  return <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none", display: "block" }} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "fixed",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        pointerEvents: "none",
+        display: "block",
+      }}
+    />
+  );
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -324,22 +617,41 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
   const localStream = useRef(null);
   const signalSub = useRef(null);
   const endTimeout = useRef(null);
+  const remoteStreamRef = useRef(null);
 
   const [muted, setMuted] = useState(false);
   const [camOff, setCamOff] = useState(false);
   const [status, setStatus] = useState(isCaller ? "Calling…" : "Connecting…");
   const [secs, setSecs] = useState(0);
   const durTimer = useRef(null);
-  const fmt = s => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+  const fmt = (s) =>
+    `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 
+  // Re-attach remote stream whenever it arrives or video element mounts
   useEffect(() => {
+    if (remoteRef.current && remoteStreamRef.current) {
+      if (remoteRef.current.srcObject !== remoteStreamRef.current) {
+        remoteRef.current.srcObject = remoteStreamRef.current;
+        remoteRef.current.play().catch(() => {});
+      }
+    }
+  }, [status]); // status changes when connected, triggering re-attach
+  useEffect(() => {
+    let mounted = true;
     let pc;
     let callStarted = false;
     let endListenReady = false;
     let pendingCandidates = [];
     let remoteDescSet = false;
+    let makingOffer = false;
+    let answerSent = false;
+    let offerProcessing = false;
+    const callId = `${myName}-${Date.now()}`;
+    let activeCallId = null;
+    let readyInterval = null;
 
     const init = async () => {
+      if (!mounted) return;
       try {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
           setStatus("Camera/mic unavailable — use HTTPS or localhost");
@@ -348,13 +660,24 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
 
         const stream = await navigator.mediaDevices.getUserMedia(
           mode === "video"
-            ? { audio: true, video: { width: 1280, height: 720, facingMode: "user" } }
-            : { audio: true, video: false }
+            ? {
+                audio: true,
+                video: { width: 1280, height: 720, facingMode: "user" },
+              }
+            : { audio: true, video: false },
         );
         localStream.current = stream;
 
-        if (mode === "video" && localRef.current) {
-          localRef.current.srcObject = stream;
+        if (mode === "video") {
+          const attachLocal = () => {
+            if (localRef.current) {
+              localRef.current.srcObject = stream;
+              localRef.current.play().catch(() => {});
+            } else {
+              setTimeout(attachLocal, 100);
+            }
+          };
+          attachLocal();
         }
 
         pc = new RTCPeerConnection({
@@ -367,28 +690,50 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
         });
         pcRef.current = pc;
 
-        stream.getTracks().forEach(t => {
+        stream.getTracks().forEach((t) => {
           console.log("Adding track:", t.kind);
           pc.addTrack(t, stream);
         });
 
-        pc.ontrack = e => {
+        pc.ontrack = (e) => {
           console.log("Got remote track:", e.track.kind);
-          if (remoteRef.current && e.streams[0]) {
-            remoteRef.current.srcObject = e.streams[0];
-            remoteRef.current.play().catch(() => { });
+          if (!e.streams[0]) return;
+          const remoteStream = e.streams[0];
+
+          if (mode === "video") {
+            remoteStreamRef.current = remoteStream;
+            const tryAttach = () => {
+              if (remoteRef.current) {
+                remoteRef.current.srcObject = remoteStream;
+                remoteRef.current.play().catch(() => {});
+              } else {
+                setTimeout(tryAttach, 100);
+              }
+            };
+            tryAttach();
+          } else {
+            // Voice call — route audio to a plain Audio element
+            const audio = new Audio();
+            audio.srcObject = remoteStream;
+            audio.autoplay = true;
+            audio.play().catch(() => {});
           }
-          setStatus("Connected");
           callStarted = true;
+          setStatus("Connected");
           clearInterval(durTimer.current);
-          durTimer.current = setInterval(() => setSecs(s => s + 1), 1000);
+          durTimer.current = setInterval(() => setSecs((s) => s + 1), 1000);
         };
 
-        pc.onicecandidate = e => {
+        pc.onicecandidate = (e) => {
           if (e.candidate && stompClient?.current?.connected) {
             stompClient.current.publish({
               destination: "/app/call-signal",
-              body: JSON.stringify({ sender: myName, type: "ICE", payload: JSON.stringify(e.candidate) }),
+              body: JSON.stringify({
+                sender: myName,
+                callId: isCaller ? callId : activeCallId,
+                type: "ICE",
+                payload: JSON.stringify(e.candidate),
+              }),
             });
           }
         };
@@ -398,26 +743,68 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
 
           if (pc.iceConnectionState === "disconnected") {
             setStatus("Reconnecting…");
-            // Try ICE restart
+
+            // Caller triggers ICE restart to attempt recovery
             if (isCaller && pcRef.current) {
               pcRef.current.restartIce();
+              // Reset answerSent on callee side via a flag so the new offer is accepted
+              makingOffer = false;
             }
+
+            // Give 8 seconds to recover before declaring the call ended
+            clearTimeout(endTimeout.current);
             endTimeout.current = setTimeout(() => {
-              if (pcRef.current &&
-                ["disconnected", "failed"].includes(pcRef.current.iceConnectionState)) {
+              if (
+                pcRef.current &&
+                ["disconnected", "failed"].includes(
+                  pcRef.current.iceConnectionState,
+                )
+              ) {
                 setStatus("Call ended");
                 clearInterval(durTimer.current);
+                onEnd(secs);
               }
             }, 8000);
+          } else if (pc.iceConnectionState === "failed") {
+            clearTimeout(endTimeout.current);
 
-          } else if (["failed", "closed"].includes(pc.iceConnectionState)) {
+            // Try one ICE restart before giving up
+            if (isCaller && pcRef.current) {
+              console.log("ICE failed — attempting restart");
+              makingOffer = false;
+              answerSent = false;
+              pcRef.current.restartIce();
+
+              // If still failed after 5 more seconds, end the call
+              endTimeout.current = setTimeout(() => {
+                if (
+                  pcRef.current &&
+                  ["failed", "disconnected"].includes(
+                    pcRef.current.iceConnectionState,
+                  )
+                ) {
+                  setStatus("Call ended");
+                  clearInterval(durTimer.current);
+                  onEnd(secs);
+                }
+              }, 5000);
+            } else {
+              setStatus("Call ended");
+              clearInterval(durTimer.current);
+              onEnd(secs);
+            }
+          } else if (pc.iceConnectionState === "closed") {
             clearTimeout(endTimeout.current);
             setStatus("Call ended");
             clearInterval(durTimer.current);
-
-          } else if (["connected", "completed"].includes(pc.iceConnectionState)) {
+          } else if (
+            pc.iceConnectionState === "connected" ||
+            pc.iceConnectionState === "completed"
+          ) {
             clearTimeout(endTimeout.current);
-            if (callStarted) setStatus("Connected");
+            setStatus(
+              callStarted ? "Connected" : "Connected — waiting for media…",
+            );
           }
         };
 
@@ -428,90 +815,175 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
         const setRemoteAndFlush = async (sdp) => {
           await pc.setRemoteDescription(new RTCSessionDescription(sdp));
           remoteDescSet = true;
-          console.log("Remote desc set, flushing", pendingCandidates.length, "buffered candidates");
+          console.log(
+            "Remote desc set, flushing",
+            pendingCandidates.length,
+            "buffered candidates",
+          );
           for (const c of pendingCandidates) {
-            try { await pc.addIceCandidate(new RTCIceCandidate(c)); } catch (_) { }
+            try {
+              await pc.addIceCandidate(new RTCIceCandidate(c));
+            } catch (_) {}
           }
           pendingCandidates = [];
         };
 
         if (stompClient?.current?.connected) {
+          signalSub.current = stompClient.current.subscribe(
+            "/topic/call-signal",
+            async (msg) => {
+              const sig = JSON.parse(msg.body);
+              if (sig.sender === myName) return;
 
-          signalSub.current = stompClient.current.subscribe("/topic/call-signal", async msg => {
-            const sig = JSON.parse(msg.body);
-            if (sig.sender === myName) return;
+              // Drop ICE from completely different sessions only
+              if (
+                sig.type === "ICE" &&
+                sig.callId &&
+                activeCallId &&
+                sig.callId !== activeCallId
+              )
+                return;
 
-            if (sig.type === "READY" && isCaller) {
-              try {
-                const offer = await pc.createOffer({
-                  offerToReceiveAudio: true,
-                  offerToReceiveVideo: mode === "video",
-                });
-                await pc.setLocalDescription(offer);
-                stompClient.current.publish({
-                  destination: "/app/call-signal",
-                  body: JSON.stringify({ sender: myName, type: "OFFER", payload: JSON.stringify(offer) }),
-                });
-              } catch (err) {
-                setStatus("Error: " + err.message);
+              if (sig.type === "READY" && isCaller) {
+                // Received READY from callee — send OFFER if not already doing so
+                if (makingOffer || pc.signalingState !== "stable") return;
+                try {
+                  makingOffer = true;
+                  const offer = await pc.createOffer({
+                    offerToReceiveAudio: true,
+                    offerToReceiveVideo: mode === "video",
+                  });
+                  await pc.setLocalDescription(offer);
+                  stompClient.current.publish({
+                    destination: "/app/call-signal",
+                    body: JSON.stringify({
+                      sender: myName,
+                      callId,
+                      type: "OFFER",
+                      payload: JSON.stringify(offer),
+                    }),
+                  });
+                } catch (err) {
+                  setStatus("Error: " + err.message);
+                } finally {
+                  makingOffer = false;
+                }
+              } else if (sig.type === "OFFER" && !isCaller) {
+                // Stop sending READY the instant we get an OFFER
+                if (readyInterval) {
+                  clearInterval(readyInterval);
+                  readyInterval = null;
+                }
+                // Drop duplicate OFFERs while we're already processing one
+                if (offerProcessing) return;
+                const isIceRestart =
+                  pc.iceConnectionState === "disconnected" ||
+                  pc.iceConnectionState === "checking" ||
+                  pc.iceConnectionState === "failed";
+                if (pc.signalingState !== "stable" && !isIceRestart) return;
+                offerProcessing = true;
+                activeCallId = sig.callId;
+                answerSent = false;
+                try {
+                  await setRemoteAndFlush(JSON.parse(sig.payload));
+                  const answer = await pc.createAnswer();
+                  await pc.setLocalDescription(answer);
+                  answerSent = true;
+                  stompClient.current.publish({
+                    destination: "/app/call-signal",
+                    body: JSON.stringify({
+                      sender: myName,
+                      callId: activeCallId,
+                      type: "ANSWER",
+                      payload: JSON.stringify(answer),
+                    }),
+                  });
+                } catch (err) {
+                  console.error("Answer error:", err);
+                  setStatus("Error: " + err.message);
+                } finally {
+                  offerProcessing = false;
+                }
+              } else if (sig.type === "ANSWER" && isCaller) {
+                console.log(
+                  "Caller received ANSWER, signalingState:",
+                  pc.signalingState,
+                  "callId match:",
+                  sig.callId === callId,
+                );
+                if (pc.signalingState === "stable") {
+                  console.warn("Dropping ANSWER — already stable");
+                  return;
+                }
+                try {
+                  await setRemoteAndFlush(JSON.parse(sig.payload));
+                  console.log("ANSWER applied successfully");
+                } catch (err) {
+                  console.error("Set answer error:", err);
+                }
+              } else if (sig.type === "ICE") {
+                const candidate = JSON.parse(sig.payload);
+                if (remoteDescSet) {
+                  try {
+                    await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                  } catch (_) {}
+                } else {
+                  pendingCandidates.push(candidate);
+                }
+              } else if (sig.type === "END" && endListenReady) {
+                onEnd(0);
               }
+            },
+          );
 
-            } else if (sig.type === "OFFER" && !isCaller) {
-              await setRemoteAndFlush(JSON.parse(sig.payload));
-              const answer = await pc.createAnswer();
-              await pc.setLocalDescription(answer);
-              stompClient.current.publish({
-                destination: "/app/call-signal",
-                body: JSON.stringify({ sender: myName, type: "ANSWER", payload: JSON.stringify(answer) }),
-              });
-              setStatus("Connected");
-              callStarted = true;
-              clearInterval(durTimer.current);
-              durTimer.current = setInterval(() => setSecs(s => s + 1), 1000);
-
-            } else if (sig.type === "ANSWER" && isCaller) {
-              if (pc.signalingState !== "stable") {
-                await setRemoteAndFlush(JSON.parse(sig.payload));
-              }
-
-            } else if (sig.type === "ICE") {
-              const candidate = JSON.parse(sig.payload);
-              if (remoteDescSet) {
-                try { await pc.addIceCandidate(new RTCIceCandidate(candidate)); } catch (_) { }
-              } else {
-                pendingCandidates.push(candidate);
-              }
-
-            } else if (sig.type === "END") {
-              if (endListenReady) {
-                onEnd();
-              }
-            }
-          });
-
-          setTimeout(() => { endListenReady = true; }, 1500);
+          setTimeout(() => {
+            endListenReady = true;
+          }, 1500);
 
           if (!isCaller) {
-            stompClient.current.publish({
-              destination: "/app/call-signal",
-              body: JSON.stringify({ sender: myName, type: "READY", payload: "" }),
-            });
+            // Callee: send READY immediately, then repeat every 2s
+            // until we receive an OFFER (answerSent will be true then)
+            const sendReady = () => {
+              if (answerSent || offerProcessing) return;
+              stompClient.current.publish({
+                destination: "/app/call-signal",
+                body: JSON.stringify({
+                  sender: myName,
+                  type: "READY",
+                  payload: "",
+                }),
+              });
+            };
+            sendReady();
+            readyInterval = setInterval(() => {
+              if (answerSent || offerProcessing || !readyInterval) {
+                clearInterval(readyInterval);
+                readyInterval = null;
+                return;
+              }
+              sendReady();
+            }, 2000);
           }
-
         } else {
           setStatus("Not connected to server");
         }
       } catch (err) {
-        setStatus(err.name === "NotAllowedError" ? "Permission denied" : "Error: " + err.message);
+        setStatus(
+          err.name === "NotAllowedError"
+            ? "Permission denied"
+            : "Error: " + err.message,
+        );
       }
     };
 
     init();
 
     return () => {
+      mounted = false;
       clearInterval(durTimer.current);
       clearTimeout(endTimeout.current);
-      localStream.current?.getTracks().forEach(t => t.stop());
+      if (readyInterval) clearInterval(readyInterval);
+      localStream.current?.getTracks().forEach((t) => t.stop());
       pcRef.current?.close();
       signalSub.current?.unsubscribe();
       if (callStarted && stompClient?.current?.connected) {
@@ -525,10 +997,10 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
 
   const toggleMute = () => {
     const nowMuted = !muted;
-    localStream.current?.getAudioTracks().forEach(t => {
+    localStream.current?.getAudioTracks().forEach((t) => {
       t.enabled = !nowMuted;
     });
-    pcRef.current?.getSenders().forEach(sender => {
+    pcRef.current?.getSenders().forEach((sender) => {
       if (sender.track?.kind === "audio") {
         sender.track.enabled = !nowMuted;
       }
@@ -538,10 +1010,10 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
 
   const toggleCam = () => {
     const nowOff = !camOff;
-    localStream.current?.getVideoTracks().forEach(t => {
+    localStream.current?.getVideoTracks().forEach((t) => {
       t.enabled = !nowOff;
     });
-    pcRef.current?.getSenders().forEach(sender => {
+    pcRef.current?.getSenders().forEach((sender) => {
       if (sender.track?.kind === "video") {
         sender.track.enabled = !nowOff;
       }
@@ -550,95 +1022,228 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
   };
 
   const callBtnSt = (bg, size = 52) => ({
-    width: size, height: size, borderRadius: "50%", border: "none",
-    background: bg, cursor: "pointer",
-    display: "flex", alignItems: "center", justifyContent: "center",
+    width: size,
+    height: size,
+    borderRadius: "50%",
+    border: "none",
+    background: bg,
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
     transition: "transform 0.12s, opacity 0.12s",
   });
 
   return (
-    <div style={{
-      position: "fixed", inset: 0, zIndex: 100,
-      fontFamily: "'Plus Jakarta Sans',sans-serif",
-      background: mode === "video" ? "#000" : "linear-gradient(135deg,#160330 0%,#0a1535 100%)",
-      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-    }}>
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 100,
+        fontFamily: "'Plus Jakarta Sans',sans-serif",
+        background:
+          mode === "video"
+            ? "#000"
+            : "linear-gradient(135deg,#160330 0%,#0a1535 100%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <style>{`@keyframes callPulse{0%,100%{box-shadow:0 0 0 0 rgba(196,109,255,0.5)}70%{box-shadow:0 0 0 20px rgba(196,109,255,0)}}`}</style>
 
       {/* Remote video — full screen */}
       {mode === "video" && (
-        <video ref={remoteRef} autoPlay playsInline
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      )}
-
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 40%,transparent 55%,rgba(0,0,0,0.65) 100%)", pointerEvents: "none" }} />
-
-      {/* Local video — picture in picture */}
-      {mode === "video" && (
-        <video ref={localRef} autoPlay muted playsInline
+        <video
+          ref={remoteRef}
+          autoPlay
+          playsInline
+          muted={false}
           style={{
-            position: "absolute", bottom: 90, right: 20, width: 160, height: 110,
-            borderRadius: 12, objectFit: "cover", zIndex: 2, background: "#111",
-            border: "2px solid rgba(255,255,255,0.25)", boxShadow: "0 8px 28px rgba(0,0,0,0.5)",
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            background: "#000",
           }}
         />
       )}
 
-      <div style={{ position: "relative", zIndex: 3, textAlign: "center", color: "#fff", marginBottom: 44 }}>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 40%,transparent 55%,rgba(0,0,0,0.65) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Local video — picture in picture */}
+      {mode === "video" && (
+        <video
+          ref={localRef}
+          autoPlay
+          muted
+          playsInline
+          style={{
+            position: "absolute",
+            bottom: 90,
+            right: 20,
+            width: 160,
+            height: 110,
+            borderRadius: 12,
+            objectFit: "cover",
+            zIndex: 2,
+            background: "#111",
+            border: "2px solid rgba(255,255,255,0.25)",
+            boxShadow: "0 8px 28px rgba(0,0,0,0.5)",
+          }}
+        />
+      )}
+
+      <div
+        style={{
+          position: "relative",
+          zIndex: 3,
+          textAlign: "center",
+          color: "#fff",
+          marginBottom: 44,
+        }}
+      >
         {mode !== "video" && (
-          <div style={{
-            width: 92, height: 92, borderRadius: "50%", margin: "0 auto 20px",
-            background: "linear-gradient(135deg,#c46dff,#7b8cff)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 36, fontWeight: 700, animation: "callPulse 1.8s infinite",
-          }}>C</div>
+          <div
+            style={{
+              width: 92,
+              height: 92,
+              borderRadius: "50%",
+              margin: "0 auto 20px",
+              background: "linear-gradient(135deg,#c46dff,#7b8cff)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 36,
+              fontWeight: 700,
+              animation: "callPulse 1.8s infinite",
+            }}
+          >
+            C
+          </div>
         )}
         <div style={{ fontSize: 22, fontWeight: 700 }}>Channel 1</div>
-        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginTop: 6 }}>
+        <div
+          style={{
+            fontSize: 13,
+            color: "rgba(255,255,255,0.55)",
+            marginTop: 6,
+          }}
+        >
           {status === "Connected" ? fmt(secs) : status}
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 3, display: "flex", gap: 22, alignItems: "center" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-          <button style={callBtnSt(muted ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.18)")}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 3,
+          display: "flex",
+          gap: 22,
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <button
+            style={callBtnSt(
+              muted ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.18)",
+            )}
             onClick={toggleMute}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
             {muted ? <IcoMicOff color="#1a0533" /> : <IcoMic color="#fff" />}
           </button>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{muted ? "Unmute" : "Mute"}</span>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>
+            {muted ? "Unmute" : "Mute"}
+          </span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-          <button style={callBtnSt("#ef4444", 64)} onClick={() => onEnd(secs)}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <button
+            style={callBtnSt("#ef4444", 64)}
+            onClick={() => onEnd(secs)}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
             <IcoPhoneOff color="#fff" />
           </button>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>End</span>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>
+            End
+          </span>
         </div>
 
         {mode === "video" ? (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-            <button style={callBtnSt(camOff ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.18)")}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <button
+              style={callBtnSt(
+                camOff ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.18)",
+              )}
               onClick={toggleCam}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
-              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-              {camOff ? <IcoVideo color="#1a0533" /> : <IcoVideoOff color="#fff" />}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >
+              {camOff ? (
+                <IcoVideo color="#1a0533" />
+              ) : (
+                <IcoVideoOff color="#fff" />
+              )}
             </button>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{camOff ? "Cam on" : "Cam off"}</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>
+              {camOff ? "Cam on" : "Cam off"}
+            </span>
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-            <button style={callBtnSt("rgba(255,255,255,0.18)")}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
-              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <button
+              style={callBtnSt("rgba(255,255,255,0.18)")}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >
               <IcoInfo color="#fff" />
             </button>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>Speaker</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>
+              Speaker
+            </span>
           </div>
         )}
       </div>
@@ -651,31 +1256,85 @@ function CallOverlay({ mode, myName, isCaller, stompClient, onEnd }) {
 ───────────────────────────────────────────────────────── */
 function IncomingCallBanner({ from, mode, onAccept, onReject }) {
   return (
-    <div style={{
-      position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)",
-      zIndex: 200, minWidth: 320,
-      background: "rgba(18,10,38,0.97)", backdropFilter: "blur(24px)",
-      border: "1px solid rgba(196,109,255,0.35)", borderRadius: 20,
-      padding: "16px 22px", display: "flex", alignItems: "center", gap: 16,
-      boxShadow: "0 16px 48px rgba(0,0,0,0.6)",
-      fontFamily: "'Plus Jakarta Sans',sans-serif", color: "#fff",
-    }}>
-      <div style={{
-        width: 44, height: 44, borderRadius: "50%", flexShrink: 0,
-        background: "linear-gradient(135deg,#c46dff,#7b8cff)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        fontSize: 17, fontWeight: 700,
-      }}>{(from || "?")[0].toUpperCase()}</div>
+    <div
+      style={{
+        position: "fixed",
+        top: 20,
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 200,
+        minWidth: 320,
+        background: "rgba(18,10,38,0.97)",
+        backdropFilter: "blur(24px)",
+        border: "1px solid rgba(196,109,255,0.35)",
+        borderRadius: 20,
+        padding: "16px 22px",
+        display: "flex",
+        alignItems: "center",
+        gap: 16,
+        boxShadow: "0 16px 48px rgba(0,0,0,0.6)",
+        fontFamily: "'Plus Jakarta Sans',sans-serif",
+        color: "#fff",
+      }}
+    >
+      <div
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: "50%",
+          flexShrink: 0,
+          background: "linear-gradient(135deg,#c46dff,#7b8cff)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 17,
+          fontWeight: 700,
+        }}
+      >
+        {(from || "?")[0].toUpperCase()}
+      </div>
       <div style={{ flex: 1 }}>
         <div style={{ fontWeight: 700, fontSize: 14 }}>{from}</div>
-        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 2 }}>
+        <div
+          style={{
+            fontSize: 12,
+            color: "rgba(255,255,255,0.55)",
+            marginTop: 2,
+          }}
+        >
           Incoming {mode === "video" ? "video" : "voice"} call…
         </div>
       </div>
-      <button onClick={onReject} style={{ width: 38, height: 38, borderRadius: "50%", border: "none", background: "#ef4444", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <button
+        onClick={onReject}
+        style={{
+          width: 38,
+          height: 38,
+          borderRadius: "50%",
+          border: "none",
+          background: "#ef4444",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <IcoPhoneOff color="#fff" size={18} />
       </button>
-      <button onClick={onAccept} style={{ width: 38, height: 38, borderRadius: "50%", border: "none", background: "#22c55e", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <button
+        onClick={onAccept}
+        style={{
+          width: 38,
+          height: 38,
+          borderRadius: "50%",
+          border: "none",
+          background: "#22c55e",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <IcoPhone color="#fff" size={18} />
       </button>
     </div>
@@ -946,15 +1605,16 @@ const buildCSS = (dark) => `
 /* ─────────────────────────────────────────────────────────
    HELPERS
 ───────────────────────────────────────────────────────── */
-const getTime = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-const initial = n => (n || "?")[0].toUpperCase();
+const getTime = () =>
+  new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+const initial = (n) => (n || "?")[0].toUpperCase();
 
 /* ─────────────────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────────────────── */
 export default function Chat({ authUser, authToken, onLogout }) {
   const [dark, setDark] = useState(true);
-  const [name,   setName]   = useState(authUser || "");
+  const [name, setName] = useState(authUser || "");
   const [joined, setJoined] = useState(!!authUser);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -963,6 +1623,7 @@ export default function Chat({ authUser, authToken, onLogout }) {
   const [callMode, setCallMode] = useState(null);
   const [isCaller, setIsCaller] = useState(false);
   const [incomingCall, setIncoming] = useState(null);
+  const [callKey, setCallKey] = useState(0);
 
   const stompClient = useRef(null);
   const messagesEnd = useRef(null);
@@ -972,37 +1633,52 @@ export default function Chat({ authUser, authToken, onLogout }) {
   const recordTimer = useRef(null);
   const recorderRef = useRef(null);
   const nameRef = useRef(name);
-  useEffect(() => { nameRef.current = name; }, [name]);
+  useEffect(() => {
+    nameRef.current = name;
+  }, [name]);
 
   useEffect(() => {
     if (authUser) connect();
   }, []); // eslint-disable-line
 
-  useEffect(() => { messagesEnd.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+  useEffect(() => {
+    messagesEnd.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   /* ── CONNECT ── */
   const connect = () => {
     const client = new Client({
-      webSocketFactory: () => new SockJS("http://192.168.100.127:8080/ws"),
+      webSocketFactory: () => new SockJS("http://192.168.108.252:8080/ws"),
       reconnectDelay: 5000,
+      connectHeaders: {
+        // ← ADD THIS
+        Authorization: `Bearer ${authToken}`, // ← ADD THIS
+      }, // ← ADD THIS
       onConnect: async () => {
         // Load message history
         try {
-          const res = await fetch("http://192.168.100.127:8080/auth/history", {
+          const res = await fetch("http://192.168.108.252:8080/auth/history", {
             headers: { Authorization: `Bearer ${authToken}` },
           });
           const history = await res.json();
-          setMessages(history.map(m => ({
-            ...m,
-            time: m.timestamp
-              ? new Date(m.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-              : getTime(),
-          })));
-        } catch { /* ignore */ }
+          setMessages(
+            history.map((m) => ({
+              ...m,
+              time: m.timestamp
+                ? new Date(m.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                : getTime(),
+            })),
+          );
+        } catch {
+          /* ignore */
+        }
 
         client.subscribe("/topic/channel1", (res) => {
           const msg = JSON.parse(res.body);
-          setMessages(prev => [...prev, { ...msg, time: getTime() }]);
+          setMessages((prev) => [...prev, { ...msg, time: getTime() }]);
         });
         client.subscribe("/topic/call-notify", (res) => {
           const sig = JSON.parse(res.body);
@@ -1032,7 +1708,7 @@ export default function Chat({ authUser, authToken, onLogout }) {
   };
 
   /* ── UPLOAD ── */
-  const BASE_URL = "http://192.168.100.127:8080";
+  const BASE_URL = "http://192.168.108.252:8080";
 
   const uploadFile = async (file, type) => {
     try {
@@ -1053,15 +1729,28 @@ export default function Chat({ authUser, authToken, onLogout }) {
 
       stompClient.current.publish({
         destination: "/app/send",
-        body: JSON.stringify({ sender: name, content: file.name || "", type, fileUrl }),
+        body: JSON.stringify({
+          sender: name,
+          content: file.name || "",
+          type,
+          fileUrl,
+        }),
       });
     } catch (err) {
       alert("Upload failed — is the server running?\n" + err.message);
     }
   };
 
-  const handleImageChange = e => { const f = e.target.files[0]; if (f) uploadFile(f, "IMAGE"); e.target.value = ""; };
-  const handleFileChange = e => { const f = e.target.files[0]; if (f) uploadFile(f, "FILE"); e.target.value = ""; };
+  const handleImageChange = (e) => {
+    const f = e.target.files[0];
+    if (f) uploadFile(f, "IMAGE");
+    e.target.value = "";
+  };
+  const handleFileChange = (e) => {
+    const f = e.target.files[0];
+    if (f) uploadFile(f, "FILE");
+    e.target.value = "";
+  };
 
   /* ── VOICE RECORDING ── */
   const startRecording = async () => {
@@ -1084,7 +1773,7 @@ export default function Chat({ authUser, authToken, onLogout }) {
       };
 
       recorder.onstop = () => {
-        stream.getTracks().forEach(track => track.stop());
+        stream.getTracks().forEach((track) => track.stop());
 
         if (recordTimer.current) {
           clearInterval(recordTimer.current);
@@ -1111,7 +1800,6 @@ export default function Chat({ authUser, authToken, onLogout }) {
           recorder.stop();
         }
       }, 1000);
-
     } catch (error) {
       console.error("Microphone error:", error);
       alert("Microphone access denied or unavailable.");
@@ -1139,52 +1827,71 @@ export default function Chat({ authUser, authToken, onLogout }) {
   };
 
   const acceptCall = () => {
-    const mode = incomingCall?.mode || "voice";
-    setIncoming(null);
+    setCallKey((k) => k + 1); // ← ADD
     setIsCaller(false);
-    setCallMode(mode);
+    setCallMode(incomingCall?.mode || "voice");
+    setIncoming(null);
   };
 
   const rejectCall = () => setIncoming(null);
-  const endCall = (durationSecs) => {
-    if (durationSecs > 0 && stompClient.current?.connected) {
+  const endCall = (secs) => {
+    if (secs > 0 && stompClient.current?.connected) {
       stompClient.current.publish({
-        destination: "/app/call-ended",
+        destination: "/app/send",
         body: JSON.stringify({
           sender: nameRef.current,
-          content: `Call ended — ${Math.floor(durationSecs / 60)}m ${durationSecs % 60}s`,
+          content: `Call ended — ${Math.floor(secs / 60)}m ${secs % 60}s`,
           type: "CALL",
-          callDuration: durationSecs,
+          callDuration: secs,
         }),
       });
     }
+    setCallKey((k) => k + 1); // ← ADD — forces full remount next call
     setCallMode(null);
     setIsCaller(false);
   };
 
   /* ── INPUT HELPERS ── */
-  const handleKeyDown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
-  const handleInput = e => {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+  const handleInput = (e) => {
     setMessage(e.target.value);
     e.target.style.height = "auto";
     e.target.style.height = Math.min(e.target.scrollHeight, 110) + "px";
   };
 
   /* ── RENDER MESSAGE ── */
-  const renderContent = msg => {
+  const renderContent = (msg) => {
     if (msg.type === "CALL") {
       return (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, opacity: 0.85 }}>
-          <IcoPhone color={msg.sender === name ? "#fff" : "var(--accent)"} size={14} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            opacity: 0.85,
+          }}
+        >
+          <IcoPhone
+            color={msg.sender === name ? "#fff" : "var(--accent)"}
+            size={14}
+          />
           <span style={{ fontSize: 13 }}>{msg.content}</span>
         </div>
       );
     }
     const resolveUrl = (url) => {
       if (!url) return "";
-      if (url.startsWith("http")) return url;
-      if (url.startsWith("/")) return `http://192.168.100.127:8080${url}`;
-      return `http://192.168.100.127:8080/${url}`;
+      // Strip any embedded host and re-prefix with current server
+      if (url.startsWith("http")) {
+        const path = url.replace(/^https?:\/\/[^/]+/, "");
+        return `http://192.168.108.252:8080${path}`;
+      }
+      return `http://192.168.108.252:8080${url.startsWith("/") ? "" : "/"}${url}`;
     };
 
     if (msg.type === "IMAGE") {
@@ -1193,20 +1900,32 @@ export default function Chat({ authUser, authToken, onLogout }) {
           src={resolveUrl(msg.fileUrl)}
           alt="img"
           className="msg-img"
-          onError={e => { e.target.style.border = "2px solid red"; e.target.alt = "Failed: " + resolveUrl(msg.fileUrl); }}
+          onError={(e) => {
+            e.target.style.border = "2px solid red";
+            e.target.alt = "Failed: " + resolveUrl(msg.fileUrl);
+          }}
         />
       );
     }
     if (msg.type === "FILE") {
       return (
-        <a href={resolveUrl(msg.fileUrl)} target="_blank" rel="noreferrer" className="msg-file">
-          <span className="msg-file-ic"><IcoFile color="#fff" size={18} /></span>
+        <a
+          href={resolveUrl(msg.fileUrl)}
+          target="_blank"
+          rel="noreferrer"
+          className="msg-file"
+        >
+          <span className="msg-file-ic">
+            <IcoFile color="#fff" size={18} />
+          </span>
           <span>{msg.content || "Download File"}</span>
         </a>
       );
     }
     if (msg.type === "AUDIO") {
-      return <audio controls src={resolveUrl(msg.fileUrl)} className="msg-audio" />;
+      return (
+        <audio controls src={resolveUrl(msg.fileUrl)} className="msg-audio" />
+      );
     }
     return msg.content;
   };
@@ -1218,29 +1937,49 @@ export default function Chat({ authUser, authToken, onLogout }) {
 
   /* last preview for sidebar */
   const lastMsg = messages.slice(-1)[0];
-  const lastPreview = !lastMsg ? "No messages yet"
-    : lastMsg.type === "IMAGE" ? "📷 Photo"
-      : lastMsg.type === "AUDIO" ? "🎤 Voice message"
-        : lastMsg.type === "FILE" ? "📎 File"
+  const lastPreview = !lastMsg
+    ? "No messages yet"
+    : lastMsg.type === "IMAGE"
+      ? "📷 Photo"
+      : lastMsg.type === "AUDIO"
+        ? "🎤 Voice message"
+        : lastMsg.type === "FILE"
+          ? "📎 File"
           : lastMsg.content;
 
   /* ── THEME TOGGLE ── */
   const ThemeToggle = () => (
-    <button className="theme-fab" onClick={() => setDark(d => !d)} title="Toggle theme">
+    <button
+      className="theme-fab"
+      onClick={() => setDark((d) => !d)}
+      title="Toggle theme"
+    >
       <div className="theme-thumb">
-        {dark ? <IcoMoon color="#fff" size={14} /> : <IcoSun color="#b45309" size={14} />}
+        {dark ? (
+          <IcoMoon color="#fff" size={14} />
+        ) : (
+          <IcoSun color="#b45309" size={14} />
+        )}
       </div>
     </button>
   );
 
   /* ════ JOIN ════ — removed, login handled by App.jsx */
- /* ════ CALL ════ */
-  if (callMode) return (
-    <>
-      <style>{buildCSS(dark)}</style>
-      <CallOverlay mode={callMode} myName={name} isCaller={isCaller} stompClient={stompClient} onEnd={endCall} />
-    </>
-  );
+  /* ════ CALL ════ */
+  if (callMode)
+    return (
+      <>
+        <style>{buildCSS(dark)}</style>
+        <CallOverlay
+          key={callKey} // ← ADD — forces full destroy/recreate
+          mode={callMode}
+          myName={name}
+          isCaller={isCaller}
+          stompClient={stompClient}
+          onEnd={endCall}
+        />
+      </>
+    );
 
   /* ════ CHAT ════ */
   return (
@@ -1251,25 +1990,38 @@ export default function Chat({ authUser, authToken, onLogout }) {
 
       {incomingCall && (
         <IncomingCallBanner
-          from={incomingCall.from} mode={incomingCall.mode}
-          onAccept={acceptCall} onReject={rejectCall}
+          from={incomingCall.from}
+          mode={incomingCall.mode}
+          onAccept={acceptCall}
+          onReject={rejectCall}
         />
       )}
 
       <div className="page">
         <div className="chat-window">
-
           {/* ── SIDEBAR ── */}
           <div className="sidebar">
             <div className="sb-top">
               <div className="sb-name">
-                {name}<span className="sb-caret">▾</span>
-                <button onClick={onLogout} style={{
-                  marginLeft: "auto", background: "rgba(251,113,133,0.15)",
-                  border: "1px solid rgba(251,113,133,0.3)", borderRadius: 8,
-                  color: "#fb7185", fontSize: 11, fontWeight: 700,
-                  padding: "3px 10px", cursor: "pointer", fontFamily: "inherit",
-                }}>Logout</button>
+                {name}
+                <span className="sb-caret">▾</span>
+                <button
+                  onClick={onLogout}
+                  style={{
+                    marginLeft: "auto",
+                    background: "rgba(251,113,133,0.15)",
+                    border: "1px solid rgba(251,113,133,0.3)",
+                    borderRadius: 8,
+                    color: "#fb7185",
+                    fontSize: 11,
+                    fontWeight: 700,
+                    padding: "3px 10px",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  Logout
+                </button>
               </div>
               <div className="sb-search">
                 <IcoSearch color={IC} size={16} />
@@ -1279,31 +2031,45 @@ export default function Chat({ authUser, authToken, onLogout }) {
             <div className="sb-section">Messages</div>
             <div className="contact-list">
               <div className="contact-item active">
-                <div className="c-av story">C<div className="c-online" /></div>
+                <div className="c-av story">
+                  C<div className="c-online" />
+                </div>
                 <div className="c-info">
                   <div className="c-name">Channel 1</div>
                   <div className="c-last">{lastPreview}</div>
                 </div>
-                <div className="c-meta"><div className="c-time">now</div></div>
+                <div className="c-meta">
+                  <div className="c-time">now</div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* ── CHAT PANEL ── */}
           <div className="chat-panel">
-
             {/* Header */}
             <div className="chat-hdr">
               <div className="h-av">C</div>
               <div className="h-info">
                 <div className="h-name">Channel 1</div>
-                <div className="h-status"><span className="h-dot" />Active now</div>
+                <div className="h-status">
+                  <span className="h-dot" />
+                  Active now
+                </div>
               </div>
               <div className="h-actions">
-                <button className="h-btn" title="Voice call" onClick={() => startCall("voice")}>
+                <button
+                  className="h-btn"
+                  title="Voice call"
+                  onClick={() => startCall("voice")}
+                >
                   <IcoPhone color={IC} size={19} />
                 </button>
-                <button className="h-btn" title="Video call" onClick={() => startCall("video")}>
+                <button
+                  className="h-btn"
+                  title="Video call"
+                  onClick={() => startCall("video")}
+                >
                   <IcoVideo color={IC} size={19} />
                 </button>
                 <button className="h-btn" title="Info">
@@ -1318,63 +2084,103 @@ export default function Chat({ authUser, authToken, onLogout }) {
                 <div className="empty-wrap">
                   <div className="empty-av">C</div>
                   <div className="empty-name">Channel 1</div>
-                  <div className="empty-hint">No messages yet — say something! 👋</div>
-                </div>
-              ) : messages.map((msg, i) => {
-                const me = msg.sender === name;
-                return (
-                  <div key={i} className={`msg-group ${me ? "me" : "other"}`}>
-                    {!me && <div className="msg-sender">{msg.sender}</div>}
-                    <div className="msg-row">
-                      {!me && <div className="mini-av">{initial(msg.sender)}</div>}
-                      <div className={`msg-bubble${msg.type === "IMAGE" ? " is-image" : ""}`}>
-                        {renderContent(msg)}
-                      </div>
-                    </div>
-                    <div className="msg-time">{msg.time}</div>
+                  <div className="empty-hint">
+                    No messages yet — say something! 👋
                   </div>
-                );
-              })}
+                </div>
+              ) : (
+                messages.map((msg, i) => {
+                  const me = msg.sender === name;
+                  return (
+                    <div key={i} className={`msg-group ${me ? "me" : "other"}`}>
+                      {!me && <div className="msg-sender">{msg.sender}</div>}
+                      <div className="msg-row">
+                        {!me && (
+                          <div className="mini-av">{initial(msg.sender)}</div>
+                        )}
+                        <div
+                          className={`msg-bubble${msg.type === "IMAGE" ? " is-image" : ""}`}
+                        >
+                          {renderContent(msg)}
+                        </div>
+                      </div>
+                      <div className="msg-time">{msg.time}</div>
+                    </div>
+                  );
+                })
+              )}
               <div ref={messagesEnd} />
             </div>
 
             {/* Input */}
             <div className="input-area">
               <div className="input-row">
-                <textarea ref={inputRef} className="msg-ta"
-                  value={message} onChange={handleInput} onKeyDown={handleKeyDown}
-                  placeholder="Message…" rows={1} />
+                <textarea
+                  ref={inputRef}
+                  className="msg-ta"
+                  value={message}
+                  onChange={handleInput}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Message…"
+                  rows={1}
+                />
                 <div className="input-icons">
-                  <button className="ico-btn" title="Send photo" onClick={() => imageInputRef.current.click()}>
+                  <button
+                    className="ico-btn"
+                    title="Send photo"
+                    onClick={() => imageInputRef.current.click()}
+                  >
                     <IcoImage color={IC} size={20} />
                   </button>
-                  <button className="ico-btn" title="Attach file" onClick={() => fileInputRef.current.click()}>
+                  <button
+                    className="ico-btn"
+                    title="Attach file"
+                    onClick={() => fileInputRef.current.click()}
+                  >
                     <IcoPaperclip color={IC} size={20} />
                   </button>
-                  <button className={`ico-btn${recording ? " rec" : ""}`}
+                  <button
+                    className={`ico-btn${recording ? " rec" : ""}`}
                     title={recording ? "Stop recording" : "Voice message"}
-                    onClick={recording ? stopRecording : startRecording}>
-                    {recording
-                      ? <IcoMicOff color="#ef4444" size={20} />
-                      : <IcoMic color={IC} size={20} />}
+                    onClick={recording ? stopRecording : startRecording}
+                  >
+                    {recording ? (
+                      <IcoMicOff color="#ef4444" size={20} />
+                    ) : (
+                      <IcoMic color={IC} size={20} />
+                    )}
                   </button>
-                  <button className="send-btn" title="Send" onClick={sendMessage}>
+                  <button
+                    className="send-btn"
+                    title="Send"
+                    onClick={sendMessage}
+                  >
                     <IcoSend color="#fff" size={17} />
                   </button>
                 </div>
               </div>
               {recording && (
                 <div className="rec-badge">
-                  <span className="rec-dot" /> Recording {recordSecs}s — tap mic to stop
+                  <span className="rec-dot" /> Recording {recordSecs}s — tap mic
+                  to stop
                 </div>
               )}
             </div>
-
           </div>
 
-          <input type="file" accept="image/*" ref={imageInputRef} style={{ display: "none" }} onChange={handleImageChange} />
-          <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleFileChange} />
-
+          <input
+            type="file"
+            accept="image/*"
+            ref={imageInputRef}
+            style={{ display: "none" }}
+            onChange={handleImageChange}
+          />
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
         </div>
       </div>
     </>

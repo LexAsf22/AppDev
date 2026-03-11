@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import WebSocketClient from "./WebSocketClient";
 
-const BASE_URL = "http://192.168.100.127:8080";
+const BASE_URL = "http://192.168.108.252:8080";
 
 /* ─────────────────────────────────────────────────────────
    GLOBAL CSS
